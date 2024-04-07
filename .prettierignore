@@ -1,0 +1,10 @@
+node_modules
+/.cache
+/.husky
+.eslintignore
+.gitignore
+.git
+build
+dist
+jsconfig.json
+README.md
