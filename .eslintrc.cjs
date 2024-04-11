@@ -47,8 +47,12 @@ module.exports = {
 		'no-plusplus': 'off',
 		'no-param-reassign': 'off',
 		'no-unused-vars': 'off',
+		'no-shadow': 'off',
+		'global-require': 'off',
 		'react/jsx-props-no-spreading': 'off',
 		'import/prefer-default-export': 'off',
 		'react/button-has-type': 'off',
+		'react/jsx-no-constructed-context-values': 'off',
+		'react/function-component-definition': 'off',
 	},
 };
