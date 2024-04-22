@@ -1,4 +1,6 @@
-function SignUp() {
-  return <div>SignUp</div>;
+import { SignUp } from '@clerk/clerk-react';
+
+function SignUpPage() {
+  return <SignUp />;
 }
-export default SignUp;
+export default SignUpPage;

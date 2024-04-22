@@ -1,6 +1,6 @@
-import SignIn from './SignIn';
+import SignInPage from './SignIn';
 
 export default {
-  path: '/',
-  element: <SignIn />,
+  path: '/sign-in',
+  element: <SignInPage />,
 };
