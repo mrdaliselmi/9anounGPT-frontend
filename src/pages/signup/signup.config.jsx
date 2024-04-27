@@ -1,6 +1,7 @@
-import SignUp from './SignUp';
+import SignUpPage from './SignUp';
 
 export default {
-  path: '/',
-  element: <SignUp />,
+  path: '/sign-up',
+  element: <SignUpPage />,
+  auth: true,
 };
