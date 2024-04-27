@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/clerk-react';
 import routes from './config.jsx';
-import { ProtectedRoute } from './ProtectedRoute.jsx';
 
 function Routing() {
   const finaleRoute = (route) => {
@@ -22,7 +22,12 @@ function Routing() {
                 route.auth || route.public ? (
                   finaleRoute(route)
                 ) : (
-                  <ProtectedRoute>{route.element}</ProtectedRoute>
+                  <div>
+                    <SignedOut>
+                      <RedirectToSignIn />
+                    </SignedOut>
+                    <SignedIn>{route.element}</SignedIn>
+                  </div>
                 )
               }
             >
@@ -34,7 +39,12 @@ function Routing() {
                     childRoute.auth || childRoute.public ? (
                       finaleRoute(childRoute)
                     ) : (
-                      <ProtectedRoute>{childRoute.element}</ProtectedRoute>
+                      <div>
+                        <SignedOut>
+                          <RedirectToSignIn />
+                        </SignedOut>
+                        <SignedIn>{childRoute.element}</SignedIn>
+                      </div>
                     )
                   }
                 />
@@ -49,7 +59,12 @@ function Routing() {
               route.auth || route.public ? (
                 finaleRoute(route)
               ) : (
-                <ProtectedRoute>{route.element}</ProtectedRoute>
+                <div>
+                  <SignedOut>
+                    <RedirectToSignIn />
+                  </SignedOut>
+                  <SignedIn>{route.element}</SignedIn>
+                </div>
               )
             }
             key={route.path}

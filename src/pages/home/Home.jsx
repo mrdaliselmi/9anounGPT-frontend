@@ -3,7 +3,8 @@ import Header from '@/components/shared/header.jsx';
 function Home() {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
+      Home
     </div>
   );
 }
