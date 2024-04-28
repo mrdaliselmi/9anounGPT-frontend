@@ -15,7 +15,7 @@ function Navbar({ className }) {
     <nav
       className={cn(
         className,
-        'flex-no-wrap flex w-full items-center justify-between bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4',
+        'border-b border-gray-400 flex-no-wrap flex w-full items-center justify-between bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4',
       )}
     >
       <div className="flex w-full flex-wrap items-center justify-between px-3">
