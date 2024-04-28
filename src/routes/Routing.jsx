@@ -3,6 +3,7 @@ import {
   RedirectToSignIn,
   SignedIn,
   SignedOut,
+  useUser,
 } from '@clerk/clerk-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -10,9 +11,9 @@ import { selectToken, setToken } from '@/app/state/user/userSlice.js';
 import routes from './config.jsx';
 
 function Routing() {
+  const { isSignedIn, user } = useUser();
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
-
   const finaleRoute = (route) => {
     if (route.public) return route.element;
     if (!token) {
@@ -37,13 +38,10 @@ function Routing() {
               element={
                 route.auth || route.public ? (
                   finaleRoute(route)
+                ) : isSignedIn ? (
+                  route.element
                 ) : (
-                  <div>
-                    <SignedOut>
-                      <RedirectToSignIn />
-                    </SignedOut>
-                    <SignedIn>{route.element}</SignedIn>
-                  </div>
+                  <RedirectToSignIn />
                 )
               }
             >
@@ -54,13 +52,10 @@ function Routing() {
                   element={
                     childRoute.auth || childRoute.public ? (
                       finaleRoute(childRoute)
+                    ) : isSignedIn ? (
+                      childRoute.element
                     ) : (
-                      <div>
-                        <SignedOut>
-                          <RedirectToSignIn />
-                        </SignedOut>
-                        <SignedIn>{childRoute.element}</SignedIn>
-                      </div>
+                      <RedirectToSignIn />
                     )
                   }
                 />
@@ -74,13 +69,10 @@ function Routing() {
             element={
               route.auth || route.public ? (
                 finaleRoute(route)
+              ) : isSignedIn ? (
+                route.element
               ) : (
-                <div>
-                  <SignedOut>
-                    <RedirectToSignIn />
-                  </SignedOut>
-                  <SignedIn>{route.element}</SignedIn>
-                </div>
+                <RedirectToSignIn />
               )
             }
             key={route.path}

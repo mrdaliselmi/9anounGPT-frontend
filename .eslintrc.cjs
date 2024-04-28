@@ -55,5 +55,6 @@ module.exports = {
 		'react/jsx-no-constructed-context-values': 'off',
 		'react/function-component-definition': 'off',
 		'react-hooks/rules-of-hooks': 'off',
+		'no-nested-ternary': 'off',
 	},
 };
