@@ -1,8 +1,9 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { RedirectToSignIn, SignedIn, SignedOut } from '@clerk/clerk-react';
+import { Routes, Route } from 'react-router-dom';
+import { RedirectToSignIn, useUser } from '@clerk/clerk-react';
 import routes from './config.jsx';
 
 function Routing() {
+  const { isSignedIn, user } = useUser();
   const finaleRoute = (route) => {
     if (route.public) return route.element;
     // add logic for redirection and protected routes
@@ -21,13 +22,10 @@ function Routing() {
               element={
                 route.auth || route.public ? (
                   finaleRoute(route)
+                ) : isSignedIn ? (
+                  route.element
                 ) : (
-                  <div>
-                    <SignedOut>
-                      <RedirectToSignIn />
-                    </SignedOut>
-                    <SignedIn>{route.element}</SignedIn>
-                  </div>
+                  <RedirectToSignIn />
                 )
               }
             >
@@ -38,13 +36,10 @@ function Routing() {
                   element={
                     childRoute.auth || childRoute.public ? (
                       finaleRoute(childRoute)
+                    ) : isSignedIn ? (
+                      childRoute.element
                     ) : (
-                      <div>
-                        <SignedOut>
-                          <RedirectToSignIn />
-                        </SignedOut>
-                        <SignedIn>{childRoute.element}</SignedIn>
-                      </div>
+                      <RedirectToSignIn />
                     )
                   }
                 />
@@ -58,13 +53,10 @@ function Routing() {
             element={
               route.auth || route.public ? (
                 finaleRoute(route)
+              ) : isSignedIn ? (
+                route.element
               ) : (
-                <div>
-                  <SignedOut>
-                    <RedirectToSignIn />
-                  </SignedOut>
-                  <SignedIn>{route.element}</SignedIn>
-                </div>
+                <RedirectToSignIn />
               )
             }
             key={route.path}
