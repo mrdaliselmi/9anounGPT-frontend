@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/clerk-react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { logOut, setToken } from '@/app/state/user/userSlice';
 
@@ -6,7 +7,7 @@ const accessBaseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const { token } = getState().user;
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
+      headers.set('authorization', `Bearer ${token}`);
     }
     return headers;
   },

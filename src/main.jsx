@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ClerkProvider } from '@clerk/clerk-react';
+import { Provider } from 'react-redux';
 import App from './App.jsx';
+import store from './app/store.js';
 import './index.css';
 import './libs/i18n/i18n.js';
 
@@ -13,7 +15,9 @@ if (!PUBLISHABLE_KEY) {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ClerkProvider>
   </React.StrictMode>,
 );

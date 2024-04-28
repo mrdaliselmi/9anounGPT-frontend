@@ -1,3 +1,4 @@
+import { useAuth } from '@clerk/clerk-react';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -9,7 +10,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      state.token = action.payload.access_token;
+      state.token = action.payload.token;
       state.user = action.payload.user;
     },
     logOut: (state) => {
@@ -29,6 +30,6 @@ export const { setCredentials, logOut, setToken, setUser } = userSlice.actions;
 
 export const selectUser = (state) => state.user.user;
 
-export const selectToken = (state) => state.user.token;
+export const selectToken = (state) => state.token;
 
 export default userSlice.reducer;

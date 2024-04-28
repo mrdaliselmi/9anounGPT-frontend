@@ -1,12 +1,28 @@
-import { Routes, Route } from 'react-router-dom';
-import { RedirectToSignIn, useUser } from '@clerk/clerk-react';
+import {
+  useAuth,
+  RedirectToSignIn,
+  SignedIn,
+  SignedOut,
+  useUser,
+} from '@clerk/clerk-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { selectToken, setToken } from '@/app/state/user/userSlice.js';
 import routes from './config.jsx';
 
 function Routing() {
   const { isSignedIn, user } = useUser();
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
   const finaleRoute = (route) => {
     if (route.public) return route.element;
-    // add logic for redirection and protected routes
+    if (!token) {
+      const { getToken } = useAuth();
+      getToken().then((res) => {
+        res && dispatch(setToken(res));
+      });
+      return route.element;
+    }
     return route.element;
   };
 
