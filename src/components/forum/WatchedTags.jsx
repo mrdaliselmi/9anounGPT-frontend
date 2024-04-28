@@ -15,12 +15,12 @@ export default function WatchedTags({ tags }) {
     'angular',
   ];
   return (
-    <Card className="shadow-none">
-      <CardHeader className="bg-zinc-200 rounded-t-xl flex flex-row space-x-2">
+    <Card className="shadow-none rounded-md">
+      <CardHeader className="bg-zinc-200 rounded-t-md flex flex-row space-x-2">
         <IconTagStarred size={24} />
         <CardTitle>Watched Tags</CardTitle>
       </CardHeader>
-      <CardContent className="bg-zinc-50 rounded-b-xl pt-2 pl-2 gap-2 flex flex-wrap">
+      <CardContent className="bg-zinc-50 rounded-b-md pt-2 pl-2 gap-2 flex flex-wrap">
         {tags.map((tag) => (
           <Badge key={tag} className="bg-primary/90 flex cursor-pointer">
             {tag}

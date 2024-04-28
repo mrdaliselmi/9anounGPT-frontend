@@ -8,9 +8,9 @@ import { NavLink } from 'react-router-dom';
 
 export default function LeftSideBar() {
   return (
-    <div className="flex flex-col w-full h-screen space-y-4 text-left border-r border-gray-400">
+    <div className="flex flex-col w-full h-screen space-y-4 text-left border-r border-gray-400 pt-2">
       <NavLink
-        to="/forum"
+        to="/forum/home"
         className="flex flex-row w-full p-2 items-center hover:bg-gray-200 hover:border-r-2 hover:border-primary/90 active:hover:bg-gray-100 active:border-primary/90 active:border-r-2"
       >
         <IconHome size={22} className="mr-2" />

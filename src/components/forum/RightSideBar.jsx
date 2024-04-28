@@ -9,13 +9,13 @@ import WatchedTags from './WatchedTags';
 
 export default function RightSideBar() {
   return (
-    <div className="flex flex-col w-full space-y-2 text-left">
-      <Card className="shadow-none">
-        <CardHeader className="bg-zinc-200 rounded-t-xl flex flex-row space-x-2">
+    <div className="flex flex-col w-full space-y-1 text-left">
+      <Card className="shadow-none rounded-md">
+        <CardHeader className="bg-zinc-200 rounded-t-md flex flex-row space-x-2">
           <IconGavel size={24} />
           <CardTitle>9anounGPT Blog</CardTitle>
         </CardHeader>
-        <CardContent className="bg-zinc-50 rounded-b-xl pt-2 pl-2 space-y-2 flex flex-col justify-center">
+        <CardContent className="bg-zinc-50 rounded-b-md pt-2 pl-2 space-y-2 flex flex-col justify-center">
           <div className="flex flex-row space-x-2 items-center">
             <IconBallpenFilled size={24} />
             <p className="text-sm">The recent legislative changes?</p>
@@ -30,12 +30,12 @@ export default function RightSideBar() {
           </div>
         </CardContent>
       </Card>
-      <Card className="shadow-none">
-        <CardHeader className="bg-zinc-200 rounded-t-xl flex flex-row space-x-2">
+      <Card className="shadow-none rounded-md">
+        <CardHeader className="bg-zinc-200 rounded-t-md flex flex-row space-x-2">
           <IconFlame size={24} />
           <CardTitle>Hot Posts</CardTitle>
         </CardHeader>
-        <CardContent className="bg-zinc-50 rounded-b-xl pt-2 pl-2 space-y-2 flex flex-col">
+        <CardContent className="bg-zinc-50 rounded-b-md pt-2 pl-2 space-y-2 flex flex-col">
           <div className="flex flex-row space-x-2 items-center">
             <IconBubbleFilled size={24} />
             <p className="text-sm">Comment avoir un fond de commerce?</p>

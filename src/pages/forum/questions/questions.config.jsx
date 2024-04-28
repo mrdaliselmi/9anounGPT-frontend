@@ -1,4 +1,4 @@
-import Questions from './questions';
+import Questions from './Questions';
 
 export default {
   path: 'questions',
