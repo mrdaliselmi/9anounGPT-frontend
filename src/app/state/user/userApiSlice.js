@@ -34,6 +34,12 @@ const userApiSlice = createApi({
         credentials: 'include',
       }),
     }),
+    chat: builder.query({
+      query: () => ({
+        url: '/about',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -42,6 +48,7 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useRefreshMutation,
+  useChatQuery,
 } = userApiSlice;
 
 export default userApiSlice;
