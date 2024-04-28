@@ -1,8 +1,9 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import { RedirectToSignIn, useUser } from '@clerk/clerk-react';
 import routes from './config.jsx';
-import { ProtectedRoute } from './ProtectedRoute.jsx';
 
 function Routing() {
+  const { isSignedIn, user } = useUser();
   const finaleRoute = (route) => {
     if (route.public) return route.element;
     // add logic for redirection and protected routes
@@ -21,8 +22,10 @@ function Routing() {
               element={
                 route.auth || route.public ? (
                   finaleRoute(route)
+                ) : isSignedIn ? (
+                  route.element
                 ) : (
-                  <ProtectedRoute>{route.element}</ProtectedRoute>
+                  <RedirectToSignIn />
                 )
               }
             >
@@ -33,8 +36,10 @@ function Routing() {
                   element={
                     childRoute.auth || childRoute.public ? (
                       finaleRoute(childRoute)
+                    ) : isSignedIn ? (
+                      childRoute.element
                     ) : (
-                      <ProtectedRoute>{childRoute.element}</ProtectedRoute>
+                      <RedirectToSignIn />
                     )
                   }
                 />
@@ -48,8 +53,10 @@ function Routing() {
             element={
               route.auth || route.public ? (
                 finaleRoute(route)
+              ) : isSignedIn ? (
+                route.element
               ) : (
-                <ProtectedRoute>{route.element}</ProtectedRoute>
+                <RedirectToSignIn />
               )
             }
             key={route.path}

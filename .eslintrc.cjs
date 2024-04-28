@@ -54,5 +54,6 @@ module.exports = {
 		'react/button-has-type': 'off',
 		'react/jsx-no-constructed-context-values': 'off',
 		'react/function-component-definition': 'off',
+		'no-nested-ternary': 'off',
 	},
 };
