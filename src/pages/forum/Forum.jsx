@@ -14,7 +14,7 @@ function Forum() {
         <div className="w-full">
           <Outlet />
         </div>
-        <div className="mx-2 mt-3 w-[400px]">
+        <div className="mx-2 mt-3 w-[400px] pr-6">
           <RightSideBar />
         </div>
       </div>
