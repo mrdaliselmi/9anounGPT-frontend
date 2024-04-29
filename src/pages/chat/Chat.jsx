@@ -1,15 +1,14 @@
 import React from 'react';
-import { useChatQuery } from '@/app/state/user/userApiSlice.js';
+import SideBar from '@/components/chat/SideBar';
+import NavChat from '@/components/chat/NavChat';
 
 function Chat() {
-  const { data, error, isLoading } = useChatQuery();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
   return (
-    <div>
-      <h1>{data.data}</h1>
+    <div className="min-h-screen flex">
+      <SideBar />
+      <div className="w-full">
+        <NavChat />
+      </div>
     </div>
   );
 }
