@@ -1,4 +1,4 @@
-import Questions from './Questions';
+import Questions from './Questions.jsx';
 
 export default {
   path: 'questions',
