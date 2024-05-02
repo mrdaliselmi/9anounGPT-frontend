@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Form,
   FormControl,
@@ -23,16 +22,24 @@ export default function AskQuestion() {
     }),
     body: z
       .string()
-      .min(20, {
+      .min(27, {
         message: 'Question body must be at least 20 characters.',
       })
       .max(140, {
         message: 'Question body must be at 140 characters or less.',
       })
       .trim(),
-    tags: z.string().min(15, {
-      message: 'title must be at least 15 characters.',
-    }),
+    tags: z
+      .string()
+      .transform((val) => val.split(/\s+/).filter(Boolean)) // Split by whitespace and remove empty strings
+      .refine((value) => value.length <= 5, {
+        message: 'Tags cannot contain more than 5 words.',
+        path: ['tags'],
+      })
+      .refine((value) => value.every((tag) => /^[a-zA-Z0-9]+$/.test(tag)), {
+        message: 'Tags can only contain alphanumeric characters.',
+        path: ['tags'],
+      }),
   });
 
   const form = useForm({
@@ -85,7 +92,6 @@ export default function AskQuestion() {
                   </FormDescription>
                   <FormControl>
                     <Tiptap
-                      body={field.name}
                       onChange={field.onChange}
                       className="shadow-none border-gray-600"
                       placeholder="eg. Am I eligible to have a driver's license in Tunisia?"
