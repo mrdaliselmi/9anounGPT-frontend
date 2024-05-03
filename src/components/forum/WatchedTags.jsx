@@ -22,7 +22,7 @@ export default function WatchedTags({ tags }) {
       </CardHeader>
       <CardContent className="bg-zinc-50 rounded-b-md pt-2 pl-2 gap-2 flex flex-wrap justify-center">
         {tags.map((tag) => (
-          <Badge key={tag} className="bg-primary/90 flex cursor-pointer">
+          <Badge key={tag} className="bg-cyan-800 flex cursor-pointer">
             {tag}
           </Badge>
         ))}

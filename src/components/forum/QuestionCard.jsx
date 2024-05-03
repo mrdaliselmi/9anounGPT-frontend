@@ -14,9 +14,9 @@ export default function QuestionCard() {
         <div className="flex text-left-justify-left font-semibold text-gray-800">
           <Link to="/forum/question/id">Question Title wtf ?</Link>
         </div>
-        <div className="flex flex-wrap text-left-justify-left space-x-2">
+        <div className="flex flex-wrap justify-left space-x-2">
           {tags.map((tag) => (
-            <Badge key={tag} className="bg-primary/90 flex cursor-pointer">
+            <Badge key={tag} className="bg-cyan-800  flex cursor-pointer mb-2">
               {tag}
             </Badge>
           ))}

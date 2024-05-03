@@ -75,7 +75,7 @@ export default function LeftSideBar() {
           title === 'Tags' && 'bg-gray-200 border-r-2 border-primary/90',
         )}
       >
-        <IconTags size={24} className="mr-2" />
+        <IconTags size={22} className="mr-2" />
         Tags
       </NavLink>
     </div>
