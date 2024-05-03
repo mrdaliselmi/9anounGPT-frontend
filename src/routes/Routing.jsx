@@ -1,12 +1,6 @@
-import {
-  useAuth,
-  RedirectToSignIn,
-  SignedIn,
-  SignedOut,
-  useUser,
-} from '@clerk/clerk-react';
+import { RedirectToSignIn, useAuth, useUser } from '@clerk/clerk-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { selectToken, setToken } from '@/app/state/user/userSlice.js';
 import routes from './config.jsx';
 
