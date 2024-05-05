@@ -33,9 +33,9 @@ const Conversation = ({ conversation }) => {
                 <IconDotsVertical className="w-5 h-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-40 cursor-pointer p-0">
+            <DropdownMenuContent className="w-full cursor-pointer m-0 ">
               <button onClick={deleteChat}>
-                <DropdownMenuItem className="text-red-600 flex flex-row justify-start p-2 gap-4">
+                <DropdownMenuItem className="w-full text-red-600 flex flex-row justify-start p-2 gap-4 focus:bg-zinc-300 focus:cursor-pointer focus:text-accent-foreground">
                   <Trash2Icon className="w-5 h-5 cursor-pointer" />
                   Delete Chat
                 </DropdownMenuItem>
