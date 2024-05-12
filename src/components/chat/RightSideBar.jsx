@@ -1,41 +1,62 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { QuestionInput } from '@/components/chat/QuestionInput.jsx';
+import { useCallback, useState } from 'react';
+import { useUser } from '@clerk/clerk-react';
+import { ChatUI } from '@/components/chat/conversations-ui/ChatUI.jsx';
+import { MessageRole } from '@/enums/MessageRole.js';
 
 const RightSideBar = () => {
-  const [chatHistory, setChatHistory] = useState([]);
+  const { user } = useUser();
+  const [isQuerying, setIsQuerying] = useState(false);
+  const [chatConversations, setChatConversations] = useState([
+    {
+      id: '1',
+      role: MessageRole.ASSISTANT,
+      message:
+        'I am a sample chat ui made by Mr Walid (@Sboui).  Welcome here ness lkol w ........ let me know if you have any questions. loem ipsum dolor sit amet, consectetur adipiscing elit.',
+    },
+    {
+      id: '2',
+      role: MessageRole.USER,
+      message: 'Amazing. Mr walid !!!!',
+    },
+    {
+      id: '3',
+      role: MessageRole.ASSISTANT,
+      message: 'Thanku you and hope u r ok',
+    },
+  ]);
 
-  // useEffect(() => {
-  //   fetch('http://192.168.1.23:5000/get_history?user_id=1&conversation_id=1', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       const parsedData = data.map((item) => JSON.parse(item));
-  //       setChatHistory(parsedData);
-  //       console.log(parsedData); // Log the parsed data here
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error fetching chat history:', error);
-  //     });
-  // }, []); // Empty dependency array ensures the effect runs only once
+  const handleSubmit = useCallback((value) => {
+    setIsQuerying(true);
+    setChatConversations((conversations) => [
+      ...conversations,
+      {
+        id: (conversations.length + 1).toString(),
+        role: MessageRole.USER,
+        message: value,
+      },
+    ]);
+    setTimeout(() => {
+      setIsQuerying(false);
+      setChatConversations((conversations) => [
+        ...conversations,
+        {
+          id: (conversations.length + 1).toString(),
+          role: MessageRole.ASSISTANT,
+          message: 'This is a response thank you again !',
+        },
+      ]);
+    }, 3000);
+  }, []);
 
   return (
-    <div className="w-full h-full flex flex-col justify-end align-bottom mb-10">
-      <div className="h-5/6">
-        <div className="grid grid-cols-3 grid-rows-2 gap-x-4 gap-y-4 mx-32">
-          {chatHistory.map((message) => (
-            <div key={uuidv4()} className="bg-gray-100 p-2 rounded-lg">
-              {message.type}
-            </div>
-          ))}
-        </div>
-      </div>
-      <QuestionInput />
-    </div>
+    <ChatUI
+      userAvatar={user.imageUrl}
+      isQuerying={isQuerying}
+      onSubmit={handleSubmit}
+      placeholder="Type here to ask a question..."
+      disabled={isQuerying}
+      conversations={chatConversations}
+    />
   );
 };
 

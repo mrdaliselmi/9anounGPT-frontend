@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '/assets/logo.png';
 import { QuestionCard } from '@/components/chat/QuestionCard.jsx';
-import { QuestionInput } from '@/components/chat/QuestionInput.jsx';
+import { QuestionInput } from '@/components/chat/conversations-ui/QuestionInput.jsx';
 
 function MainBar() {
   return (
