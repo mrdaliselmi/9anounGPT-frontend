@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { IconBell } from '@tabler/icons-react';
 import {
   SignedIn,
   SignedOut,
@@ -15,14 +16,13 @@ function Navbar({ className }) {
     <nav
       className={cn(
         className,
-        'border-b border-gray-400 flex-no-wrap flex w-full items-center justify-between bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4',
+        'border-b border-black flex-no-wrap flex flex-row w-full items-center bg-zinc-50 py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4',
       )}
     >
-      <div className="flex w-full flex-wrap items-center justify-between px-3">
+      <div className="flex w-full flex-wrap flex-row items-center px-3 space-x-3">
         <h1 className="font-bold text-lg">9anounGPT</h1>
-
         <div
-          className="!visible hidden flex-grow basis-[100%] items-center lg:!flex lg:basis-auto pl-2"
+          className="!visible hidden basis-[100%] items-center lg:!flex lg:basis-auto pl-2"
           id="navbarSupportedContent1"
           data-twe-collapse-item
         >
@@ -30,44 +30,41 @@ function Navbar({ className }) {
             className="list-style-none me-auto flex flex-col ps-0 lg:flex-row"
             data-twe-navbar-nav-ref
           >
-            <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
-              <Button variant="link">
+            <li className="mb-2 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
+              <Button
+                variant="secondary"
+                className="bg-transparent border-none shadow-none hover:bg-gray-100"
+              >
                 <Link
                   data-twe-nav-link-ref
                   className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
-                  to="/forum/home"
+                  to="/chat"
                 >
-                  Home
+                  Go to Chat
                 </Link>
               </Button>
             </li>
-            <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
-              <Button variant="link">
+            <li className="mb-2 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
+              <Button
+                variant="secondary"
+                className="bg-transparent border-none shadow-none hover:bg-gray-100"
+              >
                 <Link
                   data-twe-nav-link-ref
                   className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
                   to="/forum/questions"
                 >
-                  Questions
-                </Link>
-              </Button>
-            </li>
-            <li className="mb-4 lg:mb-0 lg:pe-2" data-twe-nav-item-ref>
-              <Button variant="link">
-                <Link
-                  data-twe-nav-link-ref
-                  className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
-                  to="/forum/users"
-                >
-                  Users
+                  Book a meeting
                 </Link>
               </Button>
             </li>
           </ul>
         </div>
 
+        <div className="flex flex-grow">
+          <Input className="w-full" placeholder="Search ..." />
+        </div>
         <div className="relative flex items-center space-x-2">
-          <Input placeholder="Search ..." />
           <SignedOut>
             <Button>
               <SignInButton />
@@ -78,6 +75,12 @@ function Navbar({ className }) {
           </SignedOut>
           <SignedIn>
             <UserButton />
+            <Button
+              variant="secondary"
+              className="bg-transparent border-none shadow-none hover:bg-gray-100"
+            >
+              <IconBell size={24} stroke={1.5} />
+            </Button>
           </SignedIn>
         </div>
       </div>
