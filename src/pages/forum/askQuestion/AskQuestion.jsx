@@ -25,7 +25,7 @@ export default function AskQuestion() {
       .min(27, {
         message: 'Question body must be at least 20 characters.',
       })
-      .max(140, {
+      .max(240, {
         message: 'Question body must be at 140 characters or less.',
       })
       .trim(),

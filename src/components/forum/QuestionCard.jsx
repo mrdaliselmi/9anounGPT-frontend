@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Badge } from '../ui/badge';
 
 export default function QuestionCard() {
@@ -12,7 +12,7 @@ export default function QuestionCard() {
       </div>
       <div className="flex flex-col w-4/6 space-y-2">
         <div className="flex text-left-justify-left font-semibold text-gray-800">
-          <Link to="/forum/question/id">Question Title wtf ?</Link>
+          <NavLink to="/forum/questions?view=12">Question Title wtf ?</NavLink>
         </div>
         <div className="flex flex-wrap justify-left space-x-2">
           {tags.map((tag) => (
