@@ -5,6 +5,7 @@ import homeConfig from '../pages/home/home.config';
 import forumConfig from '../pages/forum/forum.config';
 import signinConfig from '../pages/signin/signin.config.jsx';
 import signupConfig from '@/pages/signup/signup.config.jsx';
+import bookingConfig from '@/pages/book-appointment/booking.config.jsx';
 
 const routeConfigs = [
   chatConfig,
@@ -12,6 +13,7 @@ const routeConfigs = [
   forumConfig,
   signinConfig,
   signupConfig,
+  bookingConfig,
 ];
 
 const routes = [

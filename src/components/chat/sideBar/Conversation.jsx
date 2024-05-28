@@ -1,21 +1,35 @@
 import React from 'react';
 import { IconBrandWechat, IconDotsVertical } from '@tabler/icons-react';
 import { Trash2Icon } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu.jsx';
 import { Button } from '@/components/ui/button.jsx';
+import { deleteConversation } from '@/app/state/conversation/conversationSlice.js';
 
 const Conversation = ({ conversation }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const deleteChat = () => {
-    // console.log('Chat deleted');
+    setTimeout(() => {
+      // don't touch it, it's a hack!!it's Art :D
+      navigate('/chat');
+    }, 100);
+    dispatch(deleteConversation(conversation.id));
+  };
+  const navigateToChat = () => {
+    navigate(`/chat/${conversation.id}`);
   };
   return (
-    <div className="border rounded w-7/8 px-2 py-1 mr-1 ml-4 cursor-pointer hover:bg-zinc-300 relative">
+    <button
+      className="border rounded w-full px-4 cursor-pointer hover:bg-zinc-300 relative"
+      onClick={navigateToChat}
+    >
       <div className="flex justify-between items-center">
         <div className="flex flex-row items-center overflow-hidden">
           <IconBrandWechat className="w-5 h-5 mr-2" />
@@ -35,7 +49,7 @@ const Conversation = ({ conversation }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-full cursor-pointer m-0 ">
               <button onClick={deleteChat}>
-                <DropdownMenuItem className="w-full text-red-600 flex flex-row justify-start p-2 gap-4 focus:bg-zinc-300 focus:cursor-pointer focus:text-accent-foreground">
+                <DropdownMenuItem className="w-full text-red-600 flex flex-row justify-start p-2 gap-4 focus:cursor-pointer ">
                   <Trash2Icon className="w-5 h-5 cursor-pointer" />
                   Delete Chat
                 </DropdownMenuItem>
@@ -44,7 +58,7 @@ const Conversation = ({ conversation }) => {
           </DropdownMenu>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

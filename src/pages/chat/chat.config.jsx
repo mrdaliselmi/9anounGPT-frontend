@@ -1,6 +1,6 @@
 import Chat from './Chat';
-import RightSideBar from '@/components/chat/RightSideBar.jsx';
-import MainBar from '@/components/chat/MainBar.jsx';
+import RightSideBar from '@/components/chat/rightSideBar/RightSideBar.jsx';
+import MainBar from '@/components/chat/mainBar/MainBar.jsx';
 
 export default {
   path: 'chat/',

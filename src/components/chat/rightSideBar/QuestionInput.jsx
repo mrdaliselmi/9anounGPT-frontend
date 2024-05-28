@@ -1,13 +1,11 @@
 import { SendIcon } from 'lucide-react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 import { useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
 
 export function QuestionInput({ disabled, onSubmit, placeholder }) {
   const InputRef = useRef(null);
-  let { conversationID } = useParams();
   const navigate = useNavigate();
   const handleSubmit = useCallback(
     (e) => {
@@ -30,14 +28,8 @@ export function QuestionInput({ disabled, onSubmit, placeholder }) {
     },
     [handleSubmit],
   );
-  const onSend = () => {
-    if (!conversationID) {
-      conversationID = uuidv4();
-    }
-    navigate(`/chat/${conversationID}`);
-  };
   return (
-    <div className="fixed bottom-0 left-1/4 right-0 flex items-center justify-center py-6 px-6 ">
+    <div className="fixed bottom-2 left-1/4 right-0 flex items-center justify-center py-8 px-8 ">
       <div className="flex w-5/6 items-center justify-center relative">
         <Input
           ref={InputRef}
@@ -51,7 +43,7 @@ export function QuestionInput({ disabled, onSubmit, placeholder }) {
         />
         <Button
           className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-black cursor-pointer bg-cyan-100"
-          onClick={onSend}
+          onClick={handleSubmit}
           disabled={disabled}
         >
           <SendIcon className="w-8 h-8" />

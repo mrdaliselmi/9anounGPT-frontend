@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { QuestionInput } from '@/components/chat/conversations-ui/QuestionInput.jsx';
-import { ConversationChat } from '@/components/chat/conversations-ui/ConversationChat.jsx';
+import { QuestionInput } from '@/components/chat/rightSideBar/QuestionInput.jsx';
+import { ConversationChat } from '@/components/chat/rightSideBar/ConversationChat.jsx';
 
 export const ChatUI = ({
   disabled,
@@ -12,9 +12,9 @@ export const ChatUI = ({
 }) => {
   const chatConversationsContainerRef = useRef(null);
   return (
-    <>
+    <div className="   w-full">
       <div
-        className="flex w-full justify-center overflow-y-auto pb-8"
+        className="flex-grow overflow-y-auto"
         style={{ maxHeight: 'calc(100vh - 180px)' }}
         ref={chatConversationsContainerRef}
       >
@@ -25,12 +25,13 @@ export const ChatUI = ({
           userAvatar={userAvatar}
         />
       </div>
-      <div className="absolute left-0 w-full" />
-      <QuestionInput
-        disabled={disabled}
-        onSubmit={onSubmit}
-        placeholder={placeholder}
-      />
-    </>
+      <div className="p-4 bg-white ">
+        <QuestionInput
+          disabled={disabled}
+          onSubmit={onSubmit}
+          placeholder={placeholder}
+        />
+      </div>
+    </div>
   );
 };

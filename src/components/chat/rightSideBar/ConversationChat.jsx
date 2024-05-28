@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { IconLoader } from '@tabler/icons-react';
-import { ChatMessage } from '@/components/chat/conversations-ui/ChatMessage.jsx';
+import { ChatMessage } from '@/components/chat/rightSideBar/ChatMessage.jsx';
 import { ScrollArea } from '@/components/ui/scroll-area.jsx';
 
 export const ConversationChat = ({
@@ -18,7 +18,7 @@ export const ConversationChat = ({
   }, [conversations]);
   return (
     <ScrollArea>
-      <div className="ml-16 w-3/4">
+      <div className="ml-16">
         {conversations &&
           conversations.map((chatEntry) => (
             <ChatMessage
@@ -27,8 +27,11 @@ export const ConversationChat = ({
               userAvatar={userAvatar}
             />
           ))}
-        {/* todo : add skeleton instead of icon loader */}
-        {isQuerying && <IconLoader variant="dots" className="h-8 w-8" />}
+        {isQuerying && (
+          <div className="flex justify-center mt-4">
+            <IconLoader variant="dots" className="h-8 w-8 animate-spin" />
+          </div>
+        )}
       </div>
     </ScrollArea>
   );
