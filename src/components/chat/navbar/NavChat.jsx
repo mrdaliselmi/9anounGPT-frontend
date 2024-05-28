@@ -1,5 +1,5 @@
-import Header from '../shared/header';
-import NavigationBar from '@/components/chat/NavigationBar.jsx';
+import Header from '../../shared/header.jsx';
+import NavigationBar from '@/components/chat/navbar/NavigationBar.jsx';
 
 function NavChat() {
   return (

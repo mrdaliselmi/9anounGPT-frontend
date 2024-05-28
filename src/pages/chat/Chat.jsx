@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import SideBar from '@/components/chat/SideBar';
-import NavChat from '@/components/chat/NavChat';
+import SideBar from '@/components/chat/sideBar/SideBar.jsx';
+import NavChat from '@/components/chat/navbar/NavChat.jsx';
 
 function Chat() {
   return (

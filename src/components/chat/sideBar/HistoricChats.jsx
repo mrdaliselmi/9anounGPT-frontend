@@ -1,4 +1,4 @@
-import Conversation from './Conversation';
+import Conversation from './Conversation.jsx';
 
 function HistoricChats({ conversations }) {
   return (
@@ -16,4 +16,5 @@ function HistoricChats({ conversations }) {
     </div>
   );
 }
+
 export default HistoricChats;

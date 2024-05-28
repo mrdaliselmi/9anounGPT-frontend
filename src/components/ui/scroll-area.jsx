@@ -21,7 +21,7 @@ const ScrollArea = React.forwardRef(
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
 
 const ScrollBar = React.forwardRef(
-  ({ className, thumbClassName, orientation = 'vertical', ...props }, ref) => (
+  ({ className, orientation = 'vertical', ...props }, ref) => (
     <ScrollAreaPrimitive.ScrollAreaScrollbar
       ref={ref}
       orientation={orientation}
@@ -35,10 +35,7 @@ const ScrollBar = React.forwardRef(
       )}
       {...props}
     >
-      <ScrollAreaPrimitive.ScrollAreaThumb
-        className={thumbClassName}
-        // thumbClassName || 'relative flex-1 rounded-full bg-border'
-      />
+      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
     </ScrollAreaPrimitive.ScrollAreaScrollbar>
   ),
 );

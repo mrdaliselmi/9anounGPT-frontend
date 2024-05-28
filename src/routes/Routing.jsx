@@ -12,7 +12,7 @@ function Routing() {
     if (route.public) return route.element;
     if (!token) {
       const { getToken } = useAuth();
-      getToken().then((res) => {
+      getToken({ template: 'pfa-jwt' }).then((res) => {
         res && dispatch(setToken(res));
       });
       return route.element;

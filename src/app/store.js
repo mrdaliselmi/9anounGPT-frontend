@@ -3,6 +3,7 @@ import userReducer from '@/app/state/user/userSlice';
 import userApiSlice from '@/app/state/user/userApiSlice';
 import forumApiSlice from '@/app/state/forum/forumApiSlice';
 import forumReducer from '@/app/state/forum/forumSlice';
+import conversationsReducer from '@/app/state/conversation/conversationSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     [forumApiSlice.reducerPath]: forumApiSlice.reducer,
     user: userReducer,
     forum: forumReducer,
+    conversations: conversationsReducer,
   },
   middleware: (getdefaultMiddleware) =>
     getdefaultMiddleware().concat([

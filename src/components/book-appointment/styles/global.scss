@@ -1,0 +1,115 @@
+$side-padding: 25px;
+$border-color: #e0e0e0;
+
+$header-background-color: #b9b9b3;
+$header-title-color: #563a12;
+$body-background-color: white;
+$body-title-color: #4f3b1c;
+
+$action-active-color: #583700;
+$action-inactive-color: #dfdfdf;
+
+$section-title-color: #3f2e15;
+$section-body-color: #2f1f01;
+
+$response-title-color: rgb(75, 72, 72);
+$response-background-success-color: rgba(179, 255, 148, 0.404);
+$response-success-color: rgba(5, 148, 5, 0.582);
+$response-background-default-color: rgba(230, 230, 230, 0.822);
+$response-default-color: rgb(121, 121, 121);
+$response-background-warning-color: #fed80036;
+$response-warning-color: #fed900;
+
+$section-h5-color: #a8771a;
+$button-color: #694809;
+$button-bg-color: #fff4e1;
+
+$calendar-nav-label: #201607;
+$calendar-weekday-label: #201607;
+$calendar-day-inactive-label: #d3d3d3;
+$calendar-day-active-label: #201607;
+
+$low-availability-color: #ee807f;
+$high-availability-color: #059705c0;
+$medium-availability-color: #ccaf0d;
+
+$profile-title: #201607;
+$profile-desc: #271c0a;
+
+$section-h4-color: #a8771a;
+
+.selection-response {
+  background-color: $response-background-default-color;
+  border-left: 5px solid $response-default-color;
+  padding: 6px 12px;
+
+  h4 {
+    color: $response-title-color;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  h5 {
+    color: $response-title-color;
+    font-size: 13px;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+.response-success {
+  background-color: $response-background-success-color;
+  border-left: 5px solid $response-success-color;
+}
+
+.response-warning {
+  background-color: $response-background-warning-color;
+  border-left: 5px solid $response-warning-color;
+}
+
+@mixin box-shadow($left, $top, $radius, $color) {
+  box-shadow: $left $top $radius $color;
+  -webkit-box-shadow: $left $top $radius $color;
+  -moz-box-shadow: $left $top $radius $color;
+}
+
+@mixin transition($property, $duration, $easing: linear) {
+  transition: $property $duration $easing;
+  -webkit-transition: $property $duration $easing;
+  -moz-transition: $property $duration $easing;
+}
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
+@mixin border-radii($topleft, $topright, $bottomright, $bottomleft) {
+  border-top-left-radius: $topleft;
+  border-top-right-radius: $topright;
+  border-bottom-right-radius: $bottomright;
+  border-bottom-left-radius: $bottomleft;
+  -webkit-border-top-left-radius: $topleft;
+  -webkit-border-top-right-radius: $topright;
+  -webkit-border-bottom-right-radius: $bottomright;
+  -webkit-border-bottom-left-radius: $bottomleft;
+  -moz-border-radius-topleft: $topleft;
+  -moz-border-radius-topright: $topright;
+  -moz-border-radius-bottomright: $bottomright;
+  -moz-border-radius-bottomleft: $bottomleft;
+}
+
+@mixin gradient($color1, $color2) {
+  background-color: $color1;
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$color1}, endColorstr=#{$color2});
+  background-image: -moz-linear-gradient(center top, $color1, $color2);
+  background-image: -webkit-gradient(
+                  linear,
+                  0% 0%,
+                  0% 100%,
+                  from($color1),
+                  to($color2)
+  );
+}
