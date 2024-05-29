@@ -23,6 +23,13 @@ export const ChatMessage = ({ message, userAvatar }) => {
     });
   };
 
+  const copyToast = () => {
+    toast({
+      description: 'Message copied to clipboard!',
+      style: { backgroundColor: '#f4ecbc' },
+    });
+  };
+
   function handleLike() {
     setLiked((prev) => !prev);
     setDisliked(false);
@@ -37,6 +44,11 @@ export const ChatMessage = ({ message, userAvatar }) => {
 
   function handleRegenerate() {
     // console.log('Regenerate');
+  }
+
+  function handleCopy() {
+    copy(messageRef?.current?.innerHTML || '');
+    copyToast();
   }
 
   return (
@@ -67,7 +79,7 @@ export const ChatMessage = ({ message, userAvatar }) => {
           {isBot && (
             <div className="flex gap-2 gap-x-2 mt-2">
               <button
-                onClick={() => copy(messageRef?.current?.innerHTML || '')}
+                onClick={handleCopy}
                 className="flex items-center gap-1 text-gray-500 hover:text-gray-700"
               >
                 <CopyIcon className="hover:text-zinc-900 cursor-pointer" />
