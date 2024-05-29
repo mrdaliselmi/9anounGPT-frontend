@@ -29,8 +29,8 @@ export function QuestionInput({ disabled, onSubmit, placeholder }) {
     [handleSubmit],
   );
   return (
-    <div className="fixed bottom-2 left-1/4 right-0 flex items-center justify-center py-8 px-8 ">
-      <div className="flex w-5/6 items-center justify-center relative">
+    <div className="fixed bottom-0 left-1/4 right-24 flex items-center justify-center py-6 px-8 ">
+      <div className="flex w-full items-center justify-center relative">
         <Input
           ref={InputRef}
           onKeyUp={handleEnterKey}

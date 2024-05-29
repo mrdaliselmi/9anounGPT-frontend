@@ -19,7 +19,7 @@ const Conversation = ({ conversation }) => {
     setTimeout(() => {
       // don't touch it, it's a hack!!it's Art :D
       navigate('/chat');
-    }, 100);
+    }, 0);
     dispatch(deleteConversation(conversation.id));
   };
   const navigateToChat = () => {
@@ -27,11 +27,11 @@ const Conversation = ({ conversation }) => {
   };
   return (
     <button
-      className="border rounded w-full px-4 cursor-pointer hover:bg-zinc-300 relative"
+      className="border rounded w-full cursor-pointer hover:bg-zinc-300 relative"
       onClick={navigateToChat}
     >
-      <div className="flex justify-between items-center">
-        <div className="flex flex-row items-center overflow-hidden">
+      <div className="flex justify-between items-center w-full py-0 px-1">
+        <div className="flex flex-row items-center overflow-hidden w-full">
           <IconBrandWechat className="w-5 h-5 mr-2" />
           <p className="text-[12px] font-semibold flex-1 truncate">
             {conversation.title}
@@ -47,9 +47,9 @@ const Conversation = ({ conversation }) => {
                 <IconDotsVertical className="w-5 h-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-full cursor-pointer m-0 ">
+            <DropdownMenuContent className="w-full cursor-pointer m-0">
               <button onClick={deleteChat}>
-                <DropdownMenuItem className="w-full text-red-600 flex flex-row justify-start p-2 gap-4 focus:cursor-pointer ">
+                <DropdownMenuItem className="w-full text-red-600 flex flex-row justify-start p-2 gap-4 focus:cursor-pointer">
                   <Trash2Icon className="w-5 h-5 cursor-pointer" />
                   Delete Chat
                 </DropdownMenuItem>

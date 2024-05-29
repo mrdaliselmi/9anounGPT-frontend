@@ -5,7 +5,7 @@ import NavChat from '@/components/chat/navbar/NavChat.jsx';
 
 function Chat() {
   return (
-    <div className="flex ">
+    <div className="flex h-screen ">
       <SideBar />
       <div className="w-full flex flex-col h-screen">
         <NavChat />

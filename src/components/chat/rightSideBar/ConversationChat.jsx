@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { IconLoader } from '@tabler/icons-react';
 import { ChatMessage } from '@/components/chat/rightSideBar/ChatMessage.jsx';
-import { ScrollArea } from '@/components/ui/scroll-area.jsx';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const ConversationChat = ({
   conversations,
@@ -17,8 +17,8 @@ export const ConversationChat = ({
     container.scrollTo(0, container.scrollHeight);
   }, [conversations]);
   return (
-    <ScrollArea>
-      <div className="ml-16">
+    <div>
+      <ScrollArea className="h-full w-full">
         {conversations &&
           conversations.map((chatEntry) => (
             <ChatMessage
@@ -32,7 +32,7 @@ export const ConversationChat = ({
             <IconLoader variant="dots" className="h-8 w-8 animate-spin" />
           </div>
         )}
-      </div>
-    </ScrollArea>
+      </ScrollArea>
+    </div>
   );
 };
