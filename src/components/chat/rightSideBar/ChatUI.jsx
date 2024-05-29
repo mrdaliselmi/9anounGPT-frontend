@@ -1,6 +1,7 @@
 import { useRef } from 'react';
-import { QuestionInput } from '@/components/chat/rightSideBar/QuestionInput.jsx';
 import { ConversationChat } from '@/components/chat/rightSideBar/ConversationChat.jsx';
+import { QuestionInput } from '@/components/chat/rightSideBar/QuestionInput.jsx';
+import { Toaster } from '@/components/ui/toaster.jsx';
 
 export const ChatUI = ({
   disabled,
@@ -12,10 +13,9 @@ export const ChatUI = ({
 }) => {
   const chatConversationsContainerRef = useRef(null);
   return (
-    <div className="   w-full">
+    <div className="w-full">
       <div
-        className="flex-grow overflow-y-auto"
-        style={{ maxHeight: 'calc(100vh - 180px)' }}
+        className="flex-grow overflow-y-auto py-4 ml-40 max-h-[calc(100vh-170px)]"
         ref={chatConversationsContainerRef}
       >
         <ConversationChat
@@ -25,13 +25,12 @@ export const ChatUI = ({
           userAvatar={userAvatar}
         />
       </div>
-      <div className="p-4 bg-white ">
-        <QuestionInput
-          disabled={disabled}
-          onSubmit={onSubmit}
-          placeholder={placeholder}
-        />
-      </div>
+      <QuestionInput
+        disabled={disabled}
+        onSubmit={onSubmit}
+        placeholder={placeholder}
+      />
+      <Toaster />
     </div>
   );
 };
