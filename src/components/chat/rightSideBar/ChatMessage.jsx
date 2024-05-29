@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { CopyIcon } from '@radix-ui/react-icons';
 import { RefreshCcwIcon, ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useCopyToClipboard } from '@/utils/hooks/useCopyToClipboard.js';
 import { MessageRole } from '@/enums/MessageRole.js';
 import { useToast } from '@/components/ui/use-toast';
@@ -72,7 +74,7 @@ export const ChatMessage = ({ message, userAvatar }) => {
             ref={messageRef}
             className="whitespace-pre-wrap break-words text-left"
           >
-            {message.message}
+            <Markdown remarkPlugins={[remarkGfm]}>{message.message}</Markdown>
           </div>
         </div>
         <span className="text-xs text-gray-500 ">
