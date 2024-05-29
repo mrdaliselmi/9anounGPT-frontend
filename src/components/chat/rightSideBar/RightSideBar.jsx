@@ -33,7 +33,7 @@ const RightSideBar = () => {
           addMessage({
             conversationId: uuid,
             role: MessageRole.ASSISTANT,
-            message: 'This is a response!',
+            message: '# Hi, *Pluto*!,This is a response!',
           }),
         );
       }, 3000);
