@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { thunk } from 'redux-thunk';
 import userReducer from '@/app/state/user/userSlice';
 import userApiSlice from '@/app/state/user/userApiSlice';
 import forumApiSlice from '@/app/state/forum/forumApiSlice';
@@ -17,6 +18,7 @@ const store = configureStore({
     getdefaultMiddleware().concat([
       userApiSlice.middleware,
       forumApiSlice.middleware,
+      thunk,
     ]),
   devTools: true,
 });

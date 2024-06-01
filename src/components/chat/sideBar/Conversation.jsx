@@ -10,34 +10,54 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { deleteConversation } from '@/app/state/conversation/conversationSlice.js';
+import { useWebSocket } from '@/context/webSocketContext.jsx';
 
 const Conversation = ({ conversation }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useWebSocket();
+  // console.log('conversation', conversation);
   const deleteChat = () => {
     setTimeout(() => {
       // don't touch it, it's a hack!!it's Art :D
       navigate('/chat');
     }, 0);
-    dispatch(deleteConversation(conversation.id));
+    const url = 'http://192.168.1.14:5000/delete_history';
+    const data = {
+      conversation_id: conversation.conversation_id,
+      user_id: user.id,
+    };
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.ok) {
+        // console.log('Chat deleted successfully');
+      } else {
+        // console.error('Chat deletion failed');
+      }
+    });
   };
   const navigateToChat = () => {
-    navigate(`/chat/${conversation.id}`);
+    navigate(`/chat/${conversation.conversation_id}`);
   };
   return (
     <button
-      className="border rounded w-full cursor-pointer hover:bg-zinc-300 relative"
+      className="border rounded cursor-pointer hover:bg-zinc-300 flex flex-row text-start"
       onClick={navigateToChat}
     >
-      <div className="flex justify-between items-center w-full py-0 px-1">
-        <div className="flex flex-row items-center overflow-hidden w-full">
+      <div className="flex justify-between items-center py-0 px-1">
+        <div className="flex flex-row items-center overflow-hidden">
           <IconBrandWechat className="w-5 h-5 mr-2" />
           <p className="text-[12px] font-semibold flex-1 truncate">
-            {conversation.title}
+            {JSON.parse(conversation.history[0]).data.content.split('\n')[0]}
           </p>
         </div>
-        <div className="ml-2">
+        <div className="flex flex-grow" />
+        <div className="flex">
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="p-0">
               <Button

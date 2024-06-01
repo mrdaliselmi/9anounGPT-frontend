@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import logo from '/assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { QuestionCard } from '@/components/chat/mainBar/QuestionCard.jsx';
 import { QuestionInput } from '@/components/chat/rightSideBar/QuestionInput.jsx';
 import { questionSamples } from '@/components/chat/data/questionSamples.js';
 import { startConversation } from '@/app/state/conversation/conversationSlice.js';
+import { useWebSocket } from '@/context/webSocketContext.jsx';
 
 function MainBar() {
+  const { socket, user } = useWebSocket();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isQuerying, setIsQuerying] = useState(false);
 
-  const handleSubmit = (question) => {
-    const conversationID = uuidv4();
-    dispatch(startConversation({ question, conversationID }));
-    navigate(`/chat/${conversationID}`);
-  };
+  const handleSubmit = useCallback(
+    (value) => {
+      if (!socket) return;
+      // console.log('Sending request from MainBar');
+      setIsQuerying(true);
+      const uuid = uuidv4();
+      dispatch(
+        startConversation({
+          conversation_id: uuid,
+          question: value,
+        }),
+      );
+      socket.emit('question', {
+        conversation_id: uuid,
+        question: value,
+        user_id: user.id,
+      });
+      navigate(`/chat/${uuid}`);
+    },
+    [dispatch, user.id, socket],
+  );
 
   return (
     <div className="w-full">
