@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -14,6 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import Tiptap from '@/components/forum/Tiptap';
+import { useCreatePostMutation } from '@/app/state/forum/forumApiSlice';
 
 export default function AskQuestion() {
   const formSchema = z.object({
@@ -25,8 +29,8 @@ export default function AskQuestion() {
       .min(27, {
         message: 'Question body must be at least 20 characters.',
       })
-      .max(240, {
-        message: 'Question body must be at 140 characters or less.',
+      .max(500, {
+        message: 'Question body must be at 200 characters or less.',
       })
       .trim(),
     tags: z
@@ -50,10 +54,23 @@ export default function AskQuestion() {
       tags: '',
     },
   });
-
+  const [createPost, { isLoading, isError, isSuccess }] =
+    useCreatePostMutation();
+  const navigate = useNavigate();
   function onSubmit(values) {
-    // console.log(values);
+    createPost({
+      title: values.title,
+      content: values.body,
+      tags: values.tags,
+    });
   }
+  useEffect(() => {
+    if (isSuccess) {
+      window.location.reload();
+      toast.success('Event has been created.');
+    }
+  }, [isSuccess]);
+
   return (
     <div>
       <div className="grid gap-2">
@@ -124,7 +141,9 @@ export default function AskQuestion() {
               )}
             />
             <DialogFooter className="pb-10">
-              <Button type="submit">Submit</Button>
+              <Button disabled={isLoading} type="submit">
+                Submit
+              </Button>
             </DialogFooter>
           </form>
         </Form>
