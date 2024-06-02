@@ -16,7 +16,7 @@ export default function QuestionCard({ question }) {
         <div className="flex justify-end text-sm">{views} views</div>
       </div>
       <div className="flex flex-col w-4/6 space-y-2">
-        <div className="flex text-left-justify-left font-semibold text-gray-800">
+        <div className="flex text-left justify-left font-semibold text-gray-800">
           <NavLink to={`/forum/questions?view=${question?.id}`}>
             {title}
           </NavLink>
@@ -29,11 +29,11 @@ export default function QuestionCard({ question }) {
       </div>
       <div className="flex flex-col w-1/6 justify-center">
         <div className="flex text-sm justify-end">
-          by
+          Asked by
           <Link className="font-semibold ml-1">{question?.user.username}</Link>
         </div>
         <div className="flex text-sm justify-end">
-          asked {timeAgo(question?.createdAt)}
+          {timeAgo(question?.createdAt)}
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useGetAllPostsQuery } from '@/app/state/forum/forumApiSlice';
 import QuestionCard from './QuestionCard';
+import QuestionCardSkeleton from './skeletons/QuestionCardSkeleton';
 
 export default function TopsQuestions({ option }) {
   const params = {
@@ -20,13 +21,23 @@ export default function TopsQuestions({ option }) {
   }
 
   const { data, isError, isLoading, isSuccess } = useGetAllPostsQuery(params);
-  if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error...</div>;
   return (
     <div className="flex flex-col pr-4 mt-6 w-full">
-      {data[0].map((post) => (
-        <QuestionCard key={post.id} question={post} />
-      ))}
+      {isLoading ? (
+        <div>
+          {Array.from({ length: 10 }).map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <QuestionCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : (
+        <div>
+          {data[0].map((post) => (
+            <QuestionCard key={post.id} question={post} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

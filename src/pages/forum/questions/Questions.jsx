@@ -4,6 +4,7 @@ import { useGetAllPostsQuery } from '@/app/state/forum/forumApiSlice';
 import QuestionCard from '@/components/forum/QuestionCard';
 import AskQuestionButton from '../askQuestion/AskQuestionButton';
 import SearchResults from '../serachResults/SearchResults';
+import QuestionCardSkeleton from '@/components/forum/skeletons/QuestionCardSkeleton';
 
 function Questions() {
   const [searchParams] = useSearchParams();
@@ -34,7 +35,12 @@ function Questions() {
         </div>
       </div>
       {isLoading ? (
-        <div>Loading...</div>
+        <div>
+          {Array.from({ length: 10 }).map((_, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <QuestionCardSkeleton key={index} />
+          ))}
+        </div>
       ) : (
         data[0].map((post) => <QuestionCard key={post.id} question={post} />)
       )}
