@@ -15,6 +15,7 @@ import {
   useUpvotePostMutation,
 } from '@/app/state/forum/forumApiSlice';
 import timeAgo from '@/libs/timeAgo';
+import Tag from '@/components/forum/Tag';
 
 export default function QuestionContent({ data }) {
   const [postUpvote, { isSuccess: upvoteSuccess, isError: upvoteError }] =
@@ -24,6 +25,11 @@ export default function QuestionContent({ data }) {
   const { user } = useUser();
   const [upvote, setUpvote] = useState(false);
   const [downvote, setDownvote] = useState(false);
+  const [votes, setVotes] = useState(
+    data.votes
+      .map((vote) => (vote.type === 'up' ? 1 : -1))
+      .reduce((acc, value) => acc + value, 0),
+  );
   useEffect(() => {
     if (user) {
       setUpvote(
@@ -42,11 +48,13 @@ export default function QuestionContent({ data }) {
     postUpvote(data.id);
     setUpvote(!upvote);
     setDownvote(false);
+    setVotes(votes + 1);
   };
   const handleDownvote = () => {
     postDownvote(data.id);
     setDownvote(!downvote);
     setUpvote(false);
+    setVotes(votes - 1);
   };
   return (
     <div className="flex flex-row pt-6 w-full">
@@ -62,7 +70,7 @@ export default function QuestionContent({ data }) {
             className={cn('text-zinc-700', upvote && ' fill-zinc-700')}
           />
         </Button>
-        <div className="text-xl font-semibold">{data?.votes.length}</div>
+        <div className="text-xl font-semibold">{votes}</div>
         <Button
           onClick={handleDownvote}
           variant="ghost"
@@ -83,11 +91,7 @@ export default function QuestionContent({ data }) {
         <div>
           <div className="rounded-b-md gap-2 flex flex-wrap justify-left">
             {data?.tags &&
-              data?.tags.map((tag) => (
-                <Badge key={tag.id} className="bg-cyan-800 flex cursor-pointer">
-                  {tag.name}
-                </Badge>
-              ))}
+              data?.tags.map((tag) => <Tag name={tag.name} key={tag.id} />)}
           </div>
           <div className="flex flex-row pt-4 justify-between items-center">
             <div>

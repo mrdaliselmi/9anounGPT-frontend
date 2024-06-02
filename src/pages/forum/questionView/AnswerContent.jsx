@@ -15,6 +15,7 @@ import {
   useUpvoteAnswerMutation,
 } from '@/app/state/forum/forumApiSlice';
 import timeAgo from '@/libs/timeAgo';
+import Tag from '@/components/forum/Tag';
 
 export default function AnswerContent({ data }) {
   const [postUpvote, { isSuccess: upvoteSuccess, isError: upvoteError }] =
@@ -83,11 +84,7 @@ export default function AnswerContent({ data }) {
         <div>
           <div className="rounded-b-md gap-2 flex flex-wrap justify-left">
             {data?.tags &&
-              data?.tags.map((tag) => (
-                <Badge key={tag.id} className="bg-cyan-800 flex cursor-pointer">
-                  {tag.name}
-                </Badge>
-              ))}
+              data?.tags.map((tag) => <Tag name={tag.name} key={tag.id} />)}
           </div>
           <div className="flex flex-row pt-4 justify-between items-center">
             <div>

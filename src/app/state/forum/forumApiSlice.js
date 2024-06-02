@@ -83,6 +83,18 @@ const forumApiSlice = createApi({
         credentials: 'include',
       }),
     }),
+    getAllTags: builder.query({
+      query: () => ({
+        url: `/tags/`,
+        method: 'GET',
+      }),
+    }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: `/clerk/`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -98,6 +110,8 @@ export const {
   useUpvoteAnswerMutation,
   useDownvoteAnswerMutation,
   useGetCommentsByPostIdQuery,
+  useGetAllTagsQuery,
+  useGetAllUsersQuery,
 } = forumApiSlice;
 
 export default forumApiSlice;

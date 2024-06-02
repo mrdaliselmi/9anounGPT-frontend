@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { Badge } from '../ui/badge';
 import timeAgo from '@/libs/timeAgo';
+import Tag from './Tag';
 
 export default function QuestionCard({ question }) {
   const { title, tags, views, votes, answers } = question;
@@ -8,7 +9,7 @@ export default function QuestionCard({ question }) {
     .map((vote) => (vote.type === 'up' ? 1 : -1))
     .reduce((acc, value) => acc + value, 0);
   return (
-    <div className="flex flex-row w-full border-t p-4 space-x-8 border-gray-400">
+    <div className="flex flex-row w-full border-t p-4 space-x-8 border-gray-400 bg-gray-100">
       <div className="flex flex-col w-1/6">
         <div className="flex justify-end text-sm">{voteCount} votes</div>
         <div className="flex justify-end text-sm">{answers.length} answers</div>
@@ -22,12 +23,7 @@ export default function QuestionCard({ question }) {
         </div>
         <div className="flex flex-wrap justify-left space-x-2">
           {tags?.map((tag) => (
-            <Badge
-              key={tag.id}
-              className="bg-cyan-800  flex cursor-pointer mb-2"
-            >
-              {tag.name}
-            </Badge>
+            <Tag name={tag.name} key={tag.id} />
           ))}
         </div>
       </div>

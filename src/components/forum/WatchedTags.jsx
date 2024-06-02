@@ -1,18 +1,21 @@
-import { IconBallpenFilled, IconTagStarred } from '@tabler/icons-react';
+import { IconTagStarred } from '@tabler/icons-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
+import Tag from './Tag';
 
 export default function WatchedTags({ tags }) {
   tags = [
-    'c',
-    'c++',
-    'css',
-    'java',
-    'javascript',
-    'python',
-    'react',
-    'vue',
-    'angular',
+    {
+      name: 'Heritage',
+      id: 1,
+    },
+    {
+      name: 'DroitDuTravail',
+      id: 2,
+    },
+    {
+      name: 'Vol',
+      id: 3,
+    },
   ];
   return (
     <Card className="shadow-none rounded-md">
@@ -22,9 +25,7 @@ export default function WatchedTags({ tags }) {
       </CardHeader>
       <CardContent className="bg-zinc-50 rounded-b-md pt-2 pl-2 gap-2 flex flex-wrap justify-center">
         {tags.map((tag) => (
-          <Badge key={tag} className="bg-cyan-800 flex cursor-pointer">
-            {tag}
-          </Badge>
+          <Tag name={tag.name} key={tag.id} />
         ))}
       </CardContent>
     </Card>
