@@ -23,7 +23,10 @@ export default function AskQuestionButton() {
         <Button>Ask a Question</Button>
       </DialogTrigger>
       <DialogContent className="overflow-hidden max-h-[calc(100vh-20px)]">
-        <ScrollArea className="max-h-[calc(100vh-20px)] w-full mr-[-10px]">
+        <ScrollArea
+          scrollAreaThumbClassName="bg-transparent"
+          className="max-h-[calc(100vh-20px)] w-full mr-[-10px]"
+        >
           <DialogHeader>
             <DialogTitle>Ask a Question</DialogTitle>
             <DialogDescription>
