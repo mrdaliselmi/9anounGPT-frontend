@@ -1,50 +1,51 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable consistent-return */
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ChatUI } from '@/components/chat/rightSideBar/ChatUI.jsx';
 import { MessageRole } from '@/enums/MessageRole.js';
-import { addMessage } from '@/app/state/conversation/conversationSlice.js';
+import {
+  addMessage,
+  initializeConversation,
+} from '@/app/state/conversation/conversationSlice.js';
 import { useWebSocket } from '@/context/webSocketContext.jsx';
+import { useFetchConversationHistoryQuery } from '@/app/state/conversation/conversationApiSlice.js';
+import { MessageSkeleton } from '@/components/chat/skeleton/MessageSkeleton.jsx';
 
 const RightSideBar = () => {
-  const { socket, user } = useWebSocket();
+  const { socket, user, isQuerying, setIsQuerying } = useWebSocket();
+  console.log(isQuerying);
   const dispatch = useDispatch();
   const { uuid } = useParams();
   const conversation = useSelector((state) => state.conversations);
-  const [isQuerying, setIsQuerying] = useState(false);
-  const [fetchedConversation, setFetchedConversation] = useState(null);
-  const fetchOldConversationHistory = () => {
-    const url = `http://192.168.1.14:5000/get_history?conversation_id=${uuid}&user_id=${user.id}`;
-    fetch(url, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const fetchedData = data.map((message) => {
-          message = JSON.parse(message);
-          return {
-            role:
-              message.type === 'human'
-                ? MessageRole.USER
-                : MessageRole.ASSISTANT,
-            message: message.data?.content,
-          };
-        });
-        setFetchedConversation({ messages: fetchedData });
-      })
-      .catch((error) => {
-        // console.error('Error:', error);
-      });
-  };
+  const messages =
+    conversation.currentConversation === uuid ? conversation.messages : [];
+  const [fetchedConversation, setFetchedConversation] = useState([]);
+  const {
+    data: fetchedConversationData,
+    isLoading,
+    error: fetchedConversationError,
+  } = useFetchConversationHistoryQuery({
+    conversationId: uuid,
+    userId: user.id,
+  });
 
   useEffect(() => {
-    fetchOldConversationHistory();
+    if (fetchedConversationData?.length > 0) {
+      dispatch(
+        initializeConversation({
+          conversation_id: uuid,
+          messages: fetchedConversationData,
+        }),
+      );
+    }
+  }, [fetchedConversationData, dispatch, uuid]);
+
+  useEffect(() => {
     if (socket) {
       socket.on('response', (data) => {
         const chunk = data.data;
-        // console.log('Received chunk:', chunk);
-
         dispatch(
           addMessage({
             conversationId: uuid,
@@ -54,7 +55,6 @@ const RightSideBar = () => {
         );
 
         if (chunk.endsWith('\n\n')) {
-          // console.log('Received final chunk');
           setIsQuerying(false);
         }
         return {};
@@ -64,12 +64,11 @@ const RightSideBar = () => {
         socket.off('response');
       };
     }
-  }, [socket, dispatch, uuid, conversation]);
+  }, [socket, dispatch, uuid]);
 
   const handleSubmit = useCallback(
     (value) => {
       if (!socket) return;
-      // console.log('Sending request from RightSideBar');
       setIsQuerying(true);
       dispatch(
         addMessage({
@@ -87,8 +86,10 @@ const RightSideBar = () => {
     [uuid, dispatch, user.id, socket],
   );
 
-  if (!conversation) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return Array.from({ length: 2 }).map((_, index) => (
+      <MessageSkeleton key={index} />
+    ));
   }
 
   return (
@@ -98,7 +99,7 @@ const RightSideBar = () => {
       onSubmit={handleSubmit}
       placeholder="Type here to ask 9anounGPT a question..."
       disabled={isQuerying}
-      conversations={fetchedConversation ? fetchedConversation.messages : []}
+      conversations={messages}
     />
   );
 };

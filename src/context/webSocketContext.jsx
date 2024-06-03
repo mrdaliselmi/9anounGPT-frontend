@@ -7,17 +7,19 @@ const WebSocketContext = createContext(null);
 export const WebSocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const { user } = useUser();
+  const [isQuerying, setIsQuerying] = useState(false);
+  const backendUrl = import.meta.env.VITE_BACK_API_URL;
 
   useEffect(() => {
-    const socketInstance = io('http://192.168.1.14:5000');
+    const socketInstance = io(backendUrl);
     setSocket(socketInstance);
 
     socketInstance.on('connect', () => {
-      console.log('Socket connected');
+      // console.log('Socket connected');
     });
 
     socketInstance.on('disconnect', () => {
-      console.log('Socket disconnected');
+      // console.log('Socket disconnected');
     });
 
     return () => {
@@ -26,7 +28,9 @@ export const WebSocketProvider = ({ children }) => {
   }, []);
 
   return (
-    <WebSocketContext.Provider value={{ socket, user }}>
+    <WebSocketContext.Provider
+      value={{ socket, user, isQuerying, setIsQuerying }}
+    >
       {children}
     </WebSocketContext.Provider>
   );
