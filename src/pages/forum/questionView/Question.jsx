@@ -1,29 +1,69 @@
+import { useSearchParams } from 'react-router-dom';
 import AddComment from '@/components/forum/AddComment';
 import AskQuestionButton from '../askQuestion/AskQuestionButton';
 import QuestionContent from './QuestionContent';
+import {
+  useGetCommentsByPostIdQuery,
+  useGetPostByIdQuery,
+} from '@/app/state/forum/forumApiSlice';
+import AnswerContent from './AnswerContent';
+import timeAgo from '@/libs/timeAgo';
+import AnswerContentSkeleton from '@/components/forum/skeletons/AnswerContentSkeleton';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Question({ questionId }) {
-  const content = `<p>If I submit a build to Google play for internal testing, the automated fails the build with the following error :- java.lang.RuntimeException: Unable to start activity android.app.Fragment$InstantiationException: Unable to instantiate fragment androidx.lifecycle.u: could not find Fragment constructor, this only occurs when build with Android studio Jellyfish, and not the previous version Iguana. My App does not use fragments. Any suggestions welcome. Thanks Jeff</p>
-
-  <p>Build app with Android studio Iguana, and upload to Google play store for internal testing, and pre launch report found no Crashes or ANR's. Build App with Android Studio Jellyfish, and I get 3 issues detected on testing, one of them being main activity not starting. "java.lang.RuntimeException: Unable to start activity ComponentInfo{xx.yy.zz.zz/xx.yy.zz.zz.MainActivity}: android.app.Fragment$InstantiationException: Unable to instantiate fragment androidx.lifecycle.u: could not find Fragment constructor" The app builds and compiles fine on my MacBook M1, I don't use fragments for UI. Any ideas on this issue, or how to replicate?</p>`;
-  const tags = ['java', 'c++', 'sql', 'python'];
+  if (!questionId) {
+    const [searchParams] = useSearchParams();
+    questionId = searchParams.get('view');
+  }
+  const { data, isError, isLoading, isSuccess } = useGetPostByIdQuery(
+    parseInt(questionId, 10),
+  );
+  const {
+    data: answers,
+    isError: answersError,
+    isLoading: answersLoading,
+    isSuccess: answersSuccess,
+  } = useGetCommentsByPostIdQuery(parseInt(questionId, 10));
   return (
     <div className="mt-3 mx-4">
       <div className="space-y-4">
-        <div className="text-2xl text-start">
-          How to avoid loading the full content when i try to get information
-          from blogger post?
-        </div>
+        {isLoading ? (
+          <Skeleton className="h-4 w-64" />
+        ) : (
+          <div className="text-2xl text-start">{data?.title}</div>
+        )}
         <div className="flex flex-row space-x-4 text-sm">
-          <div className="text-gray-700">
-            Asked <span className="font-semibold text-primary">today</span>
-          </div>
-          <div className="text-gray-700">
-            Modified <span className="font-semibold text-primary">today</span>
-          </div>
-          <div className="text-gray-700">
-            Viewed <span className="font-semibold text-primary">9 times</span>
-          </div>
+          {isLoading ? (
+            <Skeleton className="h-4 w-12" />
+          ) : (
+            <div className="text-gray-700">
+              Asked{' '}
+              <span className="font-semibold text-primary">
+                {timeAgo(data?.createdAt)}
+              </span>
+            </div>
+          )}
+          {isLoading ? (
+            <Skeleton className="h-4 w-12" />
+          ) : (
+            <div className="text-gray-700">
+              Modified{' '}
+              <span className="font-semibold text-primary">
+                {timeAgo(data?.updatedAt)}
+              </span>
+            </div>
+          )}
+          {isLoading ? (
+            <Skeleton className="h-4 w-12" />
+          ) : (
+            <div className="text-gray-700">
+              Viewed{' '}
+              <span className="font-semibold text-primary">
+                {data?.views} times
+              </span>
+            </div>
+          )}
           <div className="flex flex-grow" />
           <div className="mt-[-10px]">
             <AskQuestionButton />
@@ -31,21 +71,34 @@ export default function Question({ questionId }) {
         </div>
         <hr />
       </div>
-      <QuestionContent tags={tags} content={content} />
+      {isLoading ? <AnswerContentSkeleton /> : <QuestionContent data={data} />}
       <div className="pt-6 space-y-4">
-        <div className="text-lg text-left">6 Answers</div>
+        {isLoading ? (
+          <Skeleton className="h-4 w-12" />
+        ) : (
+          <div className="text-lg text-left">
+            {answers && answers[0].length > 1
+              ? `${answers[0].length} Answers`
+              : `${answers && answers[0].length} Answer`}
+          </div>
+        )}
         <hr />
-        <QuestionContent tags={tags} content={content} />
-        <hr />
-        <QuestionContent tags={tags} content={content} />
-        <hr />
-        <QuestionContent tags={tags} content={content} />
-        <hr />
-        <QuestionContent tags={tags} content={content} />
+        {answersLoading
+          ? Array.from({ length: 3 }).map((_, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <AnswerContentSkeleton key={i} />
+            ))
+          : answers &&
+            answers[0].map((answer) => (
+              <>
+                <AnswerContent key={answer.id} data={answer} />
+                <hr />
+              </>
+            ))}
       </div>
       <div className="text-left pt-6 mb-6">
         <div className="text-lg">Your Answer</div>
-        <AddComment />
+        <AddComment postId={questionId} />
       </div>
     </div>
   );

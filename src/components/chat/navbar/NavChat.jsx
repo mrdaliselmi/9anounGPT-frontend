@@ -1,16 +1,16 @@
-import Header from '../../shared/header.jsx';
-import NavigationBar from '@/components/chat/navbar/NavigationBar.jsx';
+import { UserButton } from '@clerk/clerk-react';
 
 function NavChat() {
   return (
-    <nav className="flex items-center justify-end py-4 px-8 bg-zinc-100 w-full h-20">
-      <div className="flex justify-start">
-        <NavigationBar />
-      </div>
-      <div className="flex justify-end flex-grow">
-        <Header />
-      </div>
-    </nav>
+    <div className="absolute top-4 right-4 flex space-x-2">
+      <UserButton
+        appearance={{
+          elements: {
+            avatarBox: 'h-[36px] w-[36px]',
+          },
+        }}
+      />
+    </div>
   );
 }
 

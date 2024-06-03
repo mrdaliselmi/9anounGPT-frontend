@@ -16,6 +16,7 @@ export const ConversationChat = ({
     }
     container.scrollTo(0, container.scrollHeight);
   }, [conversations]);
+
   return (
     <div>
       <ScrollArea className="h-full w-full">

@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconBell } from '@tabler/icons-react';
 import {
   SignedIn,
@@ -7,11 +8,22 @@ import {
   SignUpButton,
   UserButton,
 } from '@clerk/clerk-react';
+import logo from '/assets/logo.png';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { cn } from '@/utils';
 
 function Navbar({ className }) {
+  const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState('');
+  const handleSearchChange = (e) => setSearchInput(e.target.value);
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      if (searchInput !== '') {
+        navigate(`/forum/questions?search=${searchInput}`);
+      }
+    }
+  };
   return (
     <nav
       className={cn(
@@ -20,6 +32,7 @@ function Navbar({ className }) {
       )}
     >
       <div className="flex w-full flex-wrap flex-row items-center px-3 space-x-3">
+        <img src={logo} alt="logo" className="h-9 w-9 mr-1" />
         <h1 className="font-bold text-lg">9anounGPT</h1>
         <div
           className="!visible hidden basis-[100%] items-center lg:!flex lg:basis-auto pl-2"
@@ -62,7 +75,13 @@ function Navbar({ className }) {
         </div>
 
         <div className="flex flex-grow">
-          <Input className="w-full" placeholder="Search ..." />
+          <Input
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
+            className="w-full"
+            placeholder="Search ..."
+            value={searchInput}
+          />
         </div>
         <div className="relative flex items-center space-x-2">
           <SignedOut>

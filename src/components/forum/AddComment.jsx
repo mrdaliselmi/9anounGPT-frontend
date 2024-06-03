@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 import {
   Form,
   FormControl,
@@ -12,15 +14,16 @@ import {
 } from '../ui/form';
 import Tiptap from './Tiptap';
 import { Button } from '../ui/button';
+import { usePostCommentMutation } from '@/app/state/forum/forumApiSlice';
 
-export default function AddComment() {
+export default function AddComment({ postId }) {
   const formSchema = z.object({
     comment: z
       .string()
       .min(27, {
         message: 'comment must be at least 20 characters.',
       })
-      .max(240, {
+      .max(500, {
         message: 'comment must be 140 characters or less.',
       })
       .trim(),
@@ -32,10 +35,24 @@ export default function AddComment() {
       comment: '',
     },
   });
+  const [postComment, { isSuccess, isLoading, isError }] =
+    usePostCommentMutation();
 
   function onSubmit(values) {
-    // console.log(values);
+    form.reset();
+    const body = { content: values.comment };
+    const id = parseInt(postId, 10);
+    postComment({ id, body });
+    window.location.reload(false);
   }
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Event has been created.');
+    }
+    if (isError) {
+      toast('error');
+    }
+  }, [isSuccess]);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

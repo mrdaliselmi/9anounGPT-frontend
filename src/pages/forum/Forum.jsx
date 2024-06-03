@@ -4,6 +4,7 @@ import LeftSideBar from '@/components/forum/LeftSideBar';
 import RightSideBar from '@/components/forum/RightSideBar';
 
 function Forum() {
+  document.title = 'Forum - 9anounGPT';
   return (
     <div className="mt-[68px]">
       <Navbar className="overflow-hidden fixed top-0 left-0 z-10" />
