@@ -11,25 +11,20 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/utils';
 import {
-  useDownvotePostMutation,
-  useUpvotePostMutation,
+  useDownvoteAnswerMutation,
+  useUpvoteAnswerMutation,
 } from '@/app/state/forum/forumApiSlice';
 import timeAgo from '@/libs/timeAgo';
 import Tag from '@/components/forum/Tag';
 
-export default function QuestionContent({ data }) {
+export default function AnswerContent({ data }) {
   const [postUpvote, { isSuccess: upvoteSuccess, isError: upvoteError }] =
-    useUpvotePostMutation();
+    useUpvoteAnswerMutation();
   const [postDownvote, { isSuccess: downvoteSuccess, isError: downvoteError }] =
-    useDownvotePostMutation();
+    useDownvoteAnswerMutation();
   const { user } = useUser();
   const [upvote, setUpvote] = useState(false);
   const [downvote, setDownvote] = useState(false);
-  const [votes, setVotes] = useState(
-    data.votes
-      .map((vote) => (vote.type === 'up' ? 1 : -1))
-      .reduce((acc, value) => acc + value, 0),
-  );
   useEffect(() => {
     if (user) {
       setUpvote(
@@ -48,13 +43,11 @@ export default function QuestionContent({ data }) {
     postUpvote(data.id);
     setUpvote(!upvote);
     setDownvote(false);
-    setVotes(votes + 1);
   };
   const handleDownvote = () => {
     postDownvote(data.id);
     setDownvote(!downvote);
     setUpvote(false);
-    setVotes(votes - 1);
   };
   return (
     <div className="flex flex-row pt-6 w-full">
@@ -70,7 +63,7 @@ export default function QuestionContent({ data }) {
             className={cn('text-zinc-700', upvote && ' fill-zinc-700')}
           />
         </Button>
-        <div className="text-xl font-semibold">{votes}</div>
+        <div className="text-xl font-semibold">{data?.votes.length}</div>
         <Button
           onClick={handleDownvote}
           variant="ghost"

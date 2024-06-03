@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconBell } from '@tabler/icons-react';
 import {
   SignedIn,
@@ -12,6 +13,16 @@ import { Button } from '../ui/button';
 import { cn } from '@/utils';
 
 function Navbar({ className }) {
+  const navigate = useNavigate();
+  const [searchInput, setSearchInput] = useState('');
+  const handleSearchChange = (e) => setSearchInput(e.target.value);
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      if (searchInput !== '') {
+        navigate(`/forum/questions?search=${searchInput}`);
+      }
+    }
+  };
   return (
     <nav
       className={cn(
@@ -62,7 +73,13 @@ function Navbar({ className }) {
         </div>
 
         <div className="flex flex-grow">
-          <Input className="w-full" placeholder="Search ..." />
+          <Input
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyDown}
+            className="w-full"
+            placeholder="Search ..."
+            value={searchInput}
+          />
         </div>
         <div className="relative flex items-center space-x-2">
           <SignedOut>
