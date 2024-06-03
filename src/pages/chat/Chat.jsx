@@ -5,6 +5,7 @@ import { WebSocketProvider } from '@/context/webSocketContext.jsx';
 import NavChat from '@/components/chat/navbar/NavChat.jsx';
 
 function Chat() {
+  document.title = 'Chat - 9anounGPT';
   return (
     <WebSocketProvider>
       <div className="flex h-screen ">

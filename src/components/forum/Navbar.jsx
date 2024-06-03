@@ -8,6 +8,7 @@ import {
   SignUpButton,
   UserButton,
 } from '@clerk/clerk-react';
+import logo from '/assets/logo.png';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { cn } from '@/utils';
@@ -31,6 +32,7 @@ function Navbar({ className }) {
       )}
     >
       <div className="flex w-full flex-wrap flex-row items-center px-3 space-x-3">
+        <img src={logo} alt="logo" className="h-9 w-9 mr-1" />
         <h1 className="font-bold text-lg">9anounGPT</h1>
         <div
           className="!visible hidden basis-[100%] items-center lg:!flex lg:basis-auto pl-2"
