@@ -16,7 +16,7 @@ import { MessageSkeleton } from '@/components/chat/skeleton/MessageSkeleton.jsx'
 const RightSideBar = () => {
   const { socket, user, isQuerying, setIsQuerying, setFetched } =
     useWebSocket();
-  console.log(isQuerying);
+  // console.log(isQuerying);
   const dispatch = useDispatch();
   const { uuid } = useParams();
   const conversation = useSelector((state) => state.conversations);
