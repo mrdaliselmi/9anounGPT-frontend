@@ -16,19 +16,14 @@ const Typewriter = ({ markdownText }) => {
     if (tag && tags.length > 1) {
       tag = `#${tag}`;
       const neew = markdownText.split(tag);
-      console.log('new', neew);
       markdownText = markdownText.split(tag).join('');
-      console.log('md', markdownText);
     }
   });
-  console.log('tags', tags);
 
   const parsedMarkdown = marked(markdownText);
 
   useEffect(() => {
     if (index < parsedMarkdown.length) {
-      console.log('parsedMarkdown', parsedMarkdown);
-      console.log('typewrite', parsedMarkdown.split(' '));
       const timeoutId = setTimeout(() => {
         setDisplayedText(parsedMarkdown.slice(0, index + 1));
         setIndex(index + 1);
