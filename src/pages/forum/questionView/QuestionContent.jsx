@@ -15,7 +15,7 @@ import {
   useUpvotePostMutation,
 } from '@/app/state/forum/forumApiSlice';
 import timeAgo from '@/libs/timeAgo';
-import Tag from '@/components/forum/Tag';
+import Tag from '@/components/forum/Tag.jsx';
 
 export default function QuestionContent({ data }) {
   const [postUpvote, { isSuccess: upvoteSuccess, isError: upvoteError }] =
