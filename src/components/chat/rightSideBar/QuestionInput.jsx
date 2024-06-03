@@ -2,7 +2,6 @@ import { SendIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button.jsx';
-import { Input } from '@/components/ui/input.jsx';
 
 export function QuestionInput({ disabled, onSubmit, placeholder }) {
   const InputRef = useRef(null);
@@ -31,18 +30,17 @@ export function QuestionInput({ disabled, onSubmit, placeholder }) {
   return (
     <div className="fixed bottom-0 left-1/4 right-24 flex items-center justify-center py-6 px-8 ">
       <div className="flex w-full items-center justify-center relative">
-        <Input
+        <textarea
           ref={InputRef}
           onKeyUp={handleEnterKey}
           disabled={disabled}
-          type="text"
-          className="h-[48px] ring-1 w-full pr-12 focus-visible:outline-none "
+          className="h-[48px] ring-1 w-full pr-12 focus-visible:outline-none rounded-lg border-1 border-gray-300 p-2"
           placeholder={
             placeholder?.length > 0 ? placeholder : 'Type your question here'
           }
         />
         <Button
-          className="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-black cursor-pointer bg-cyan-100"
+          className="absolute right-0 top-0 h-full w-12 flex items-center rounded-lg justify-center text-black cursor-pointer bg-cyan-100"
           onClick={handleSubmit}
           disabled={disabled}
         >

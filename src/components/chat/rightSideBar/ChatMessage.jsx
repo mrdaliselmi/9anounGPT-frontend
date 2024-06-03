@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { CopyIcon } from '@radix-ui/react-icons';
 import { RefreshCcwIcon, ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
 import { useCopyToClipboard } from '@/utils/hooks/useCopyToClipboard.js';
 import { MessageRole } from '@/enums/MessageRole.js';
 import { useToast } from '@/components/ui/use-toast';
+import Typewriter from '@/components/chat/typeWriter/typewriter.jsx';
 
 export const ChatMessage = ({ message, userAvatar }) => {
   const messageRef = useRef(null);
@@ -73,7 +73,7 @@ export const ChatMessage = ({ message, userAvatar }) => {
             ref={messageRef}
             className="whitespace-pre-wrap break-words text-left"
           >
-            <ReactMarkdown>{message.message}</ReactMarkdown>
+            <Typewriter markdownText={message.message} />
           </div>
         </div>
         <span className="text-xs text-gray-500 ">
