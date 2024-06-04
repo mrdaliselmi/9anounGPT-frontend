@@ -198,7 +198,7 @@ function BookingSelection({
           className="calendar-button"
           onClick={onCalendarDisplay}
         >
-          <CalendarIcon />
+          <CalendarIcon className="!stroke-black !stroke-[0.5px]" />
         </button>
       </div>
       <div className="bs-body">
@@ -210,7 +210,7 @@ function BookingSelection({
             minDate={START_DATE}
             showNeighboringMonth={false}
             minDetail="year"
-            className="calendar-selector"
+            className="calendar-selector "
             next2Label={null}
             prev2Label={null}
             nextLabel={<ArrowDownIcon />}
