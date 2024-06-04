@@ -56,7 +56,10 @@ function MainBar() {
           </div>
         ))}
       </div>
-      <QuestionInput onSubmit={handleSubmit} />
+      <QuestionInput
+        onSubmit={handleSubmit}
+        placeholder="Ask 9anounGPT a question..."
+      />
     </div>
   );
 }

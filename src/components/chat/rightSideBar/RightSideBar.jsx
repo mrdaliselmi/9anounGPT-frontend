@@ -2,7 +2,7 @@
 /* eslint-disable consistent-return */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChatUI } from '@/components/chat/rightSideBar/ChatUI.jsx';
 import { MessageRole } from '@/enums/MessageRole.js';
 import {
@@ -18,10 +18,14 @@ const RightSideBar = () => {
     useWebSocket();
   // console.log(isQuerying);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { uuid } = useParams();
   const conversation = useSelector((state) =>
     state.conversations.conversations.find((c) => c.id === uuid),
   );
+  if (!conversation) {
+    navigate('/chat');
+  }
   const messages = conversation ? conversation.messages : [];
   const [fetchedConversation, setFetchedConversation] = useState([]);
   const {
