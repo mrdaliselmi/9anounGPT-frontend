@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { PlusIcon, SparklesIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import HistoricChats from '@/components/chat/sideBar/HistoricChats.jsx';
 import { useWebSocket } from '@/context/webSocketContext.jsx';
 import { ScrollArea } from '@/components/ui/scroll-area.jsx';
 import logo from '/assets/logo.png';
 import { useFetchUserHistoryQuery } from '@/app/state/conversation/conversationApiSlice.js';
 import { ConversationSkeleton } from '@/components/chat/skeleton/ConversationSkeleton.jsx';
+import { setUserHistory } from '@/app/state/conversation/conversationSlice.js';
 
 function SideBar() {
   const navigate = useNavigate();
-  const [conversations, setConversations] = useState([]);
+  const dispatch = useDispatch();
   const { user } = useWebSocket();
+
   const newChat = () => {
     navigate('/chat');
   };
   const upgradeToPlus = () => {
     // console.log('Upgrade to Plus');
   };
+  const conversations = useSelector(
+    (state) => state.conversations.conversations,
+  );
 
   const {
     data: userHistory,
@@ -29,17 +35,10 @@ function SideBar() {
   });
 
   useEffect(() => {
-    if (isLoading) {
-      console.log('Loading user history');
-    }
     if (userHistory) {
-      setConversations(userHistory);
-      console.log('userHistory', userHistory);
+      dispatch(setUserHistory(userHistory));
     }
-    if (userHistoryError) {
-      console.log('Error fetching user history:', userHistoryError);
-    }
-  }, [userHistory, isLoading, userHistoryError]);
+  }, [userHistory, dispatch]);
 
   return (
     <div className="flex lg:w-1/5 md:w-1/3 w-full flex-col justify-between items-center h-full  bg-zinc-200 min-h-screen px-0 py-6">
