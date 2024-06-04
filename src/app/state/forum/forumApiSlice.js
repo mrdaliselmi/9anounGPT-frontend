@@ -4,6 +4,7 @@ import { baseQuery } from '@/app/state/forum/query';
 const forumApiSlice = createApi({
   reducerPath: 'forumApi',
   baseQuery,
+  tagTypes: ['forum'],
   endpoints: (builder) => ({
     createPost: builder.mutation({
       query: (body) => ({
@@ -60,6 +61,7 @@ const forumApiSlice = createApi({
         url: `/answers/post/${id}`,
         method: 'GET',
       }),
+      providesTags: ['forum'],
     }),
     postComment: builder.mutation({
       query: ({ id, body }) => ({
@@ -68,6 +70,7 @@ const forumApiSlice = createApi({
         body,
         credentials: 'include',
       }),
+      invalidatesTags: ['forum'],
     }),
     upvoteAnswer: builder.mutation({
       query: (id) => ({
