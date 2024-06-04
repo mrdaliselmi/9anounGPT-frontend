@@ -25,6 +25,11 @@ export default function AnswerContent({ data }) {
   const { user } = useUser();
   const [upvote, setUpvote] = useState(false);
   const [downvote, setDownvote] = useState(false);
+  const [votes, setVotes] = useState(
+    data.votes
+      .map((vote) => (vote.type === 'up' ? 1 : -1))
+      .reduce((acc, value) => acc + value, 0),
+  );
   useEffect(() => {
     if (user) {
       setUpvote(
@@ -43,11 +48,13 @@ export default function AnswerContent({ data }) {
     postUpvote(data.id);
     setUpvote(!upvote);
     setDownvote(false);
+    setVotes(votes + 1);
   };
   const handleDownvote = () => {
     postDownvote(data.id);
     setDownvote(!downvote);
     setUpvote(false);
+    setVotes(votes - 1);
   };
   return (
     <div className="flex flex-row pt-6 w-full">
@@ -63,7 +70,7 @@ export default function AnswerContent({ data }) {
             className={cn('text-zinc-700', upvote && ' fill-zinc-700')}
           />
         </Button>
-        <div className="text-xl font-semibold">{data?.votes.length}</div>
+        <div className="text-xl font-semibold">{votes}</div>
         <Button
           onClick={handleDownvote}
           variant="ghost"

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { IconBell } from '@tabler/icons-react';
 import {
   SignedIn,
@@ -32,8 +32,10 @@ function Navbar({ className }) {
       )}
     >
       <div className="flex w-full flex-wrap flex-row items-center px-3 space-x-3">
-        <img src={logo} alt="logo" className="h-9 w-9 mr-1" />
-        <h1 className="font-bold text-lg">9anounGPT</h1>
+        <NavLink to="/" className="flex flex-row items-center">
+          <img src={logo} alt="logo" className="h-9 w-9 mr-1" />
+          <h1 className="font-bold text-lg">9anounGPT</h1>
+        </NavLink>
         <div
           className="!visible hidden basis-[100%] items-center lg:!flex lg:basis-auto pl-2"
           id="navbarSupportedContent1"
