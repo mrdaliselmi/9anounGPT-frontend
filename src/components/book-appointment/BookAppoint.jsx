@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from './components/Header.jsx';
 import Container from './components/Container.jsx';
 import './styles/app.scss';
 
@@ -8,13 +7,11 @@ function BookAppoint() {
 
   const updateAppointment = (ap) => {
     setAppointment(ap);
-    // console.log(appointment);
   };
 
   return (
-    <div className="app">
-      <Header />
-      <div className="py-4 px-96">
+    <div className="app flex justify-center items-center bg-[#F1F1F1]">
+      <div className="my-16 mx-auto">
         <Container updateAppointment={updateAppointment} />
       </div>
     </div>

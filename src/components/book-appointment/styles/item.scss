@@ -7,9 +7,9 @@
   .item-header {
     .item-id {
       @include border-radius(50%);
-      background-color: $header-background-color;
-      color: $header-title-color;
-
+      color: #000;
+      --tw-bg-opacity: 1;
+      background-color: rgb(209 213 219 / var(--tw-bg-opacity));
       width: 28px;
       height: 28px;
 
