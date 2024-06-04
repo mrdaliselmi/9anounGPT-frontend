@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable prefer-destructuring */
+import React, { useEffect } from 'react';
 import { IconBrandWechat, IconDotsVertical } from '@tabler/icons-react';
 import { Trash2Icon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,29 +21,48 @@ import {
 import { Button } from '@/components/ui/button.jsx';
 import { useWebSocket } from '@/context/webSocketContext.jsx';
 import { useDeleteConversationMutation } from '@/app/state/conversation/conversationApiSlice.js';
+import { deleteConversationFromHistory } from '@/app/state/conversation/conversationSlice.js';
 
 const Conversation = ({ conversation }) => {
+  let title;
+  if (
+    conversation &&
+    conversation.messages &&
+    conversation.messages.length > 0
+  ) {
+    title = conversation.messages[0].message;
+  } else {
+    title = JSON.parse(conversation.history[0]).data.content.split('\n')[0];
+  }
   const navigate = useNavigate();
   const { user } = useWebSocket();
+  const dispatch = useDispatch();
   const [
     deleteConversation,
     { isLoading: isDeleting, error: deleteError, isSuccess: deleteSuccess },
   ] = useDeleteConversationMutation();
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      console.log('Chat deleted successfully');
+      dispatch(
+        deleteConversationFromHistory({
+          conversationId: conversation.conversation_id,
+        }),
+      );
+    }
+  }, [deleteSuccess, dispatch, conversation.conversation_id]);
   const deleteChat = () => {
     setTimeout(() => {
       navigate('/chat');
     }, 0);
-    console.log(conversation.conversation_id);
     const data = {
       conversation_id: conversation.conversation_id,
       user_id: user.id,
     };
     deleteConversation(data);
-    if (deleteSuccess) {
-      // console.log('Chat deleted successfully');
-    }
     if (deleteError) {
-      // console.log('Error deleting chat:', deleteError);
+      console.log('Error deleting chat:', deleteError);
     }
   };
   const navigateToChat = () => {
@@ -56,7 +77,7 @@ const Conversation = ({ conversation }) => {
         <div className="flex flex-row items-center ">
           <IconBrandWechat className="w-5 h-5 mr-2 " />
           <p className="text-[12px] font-semibold flex-1 truncate max-w-52">
-            {JSON.parse(conversation.history[0]).data.content.split('\n')[0]}
+            {title}
           </p>
         </div>
         <div className="flex flex-grow" />

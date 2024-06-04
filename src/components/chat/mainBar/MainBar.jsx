@@ -6,7 +6,10 @@ import { useDispatch } from 'react-redux';
 import { QuestionCard } from '@/components/chat/mainBar/QuestionCard.jsx';
 import { QuestionInput } from '@/components/chat/rightSideBar/QuestionInput.jsx';
 import { questionSamples } from '@/components/chat/data/questionSamples.jsx';
-import { startConversation } from '@/app/state/conversation/conversationSlice.js';
+import {
+  setCurrentConversation,
+  startConversation,
+} from '@/app/state/conversation/conversationSlice.js';
 import { useWebSocket } from '@/context/webSocketContext.jsx';
 
 function MainBar() {
@@ -25,6 +28,7 @@ function MainBar() {
           question: value,
         }),
       );
+      dispatch(setCurrentConversation(uuid));
       socket.emit('question', {
         conversation_id: uuid,
         question: value,

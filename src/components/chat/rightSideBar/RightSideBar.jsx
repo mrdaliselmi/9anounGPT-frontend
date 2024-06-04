@@ -14,13 +14,15 @@ import { useFetchConversationHistoryQuery } from '@/app/state/conversation/conve
 import { MessageSkeleton } from '@/components/chat/skeleton/MessageSkeleton.jsx';
 
 const RightSideBar = () => {
-  const { socket, user, isQuerying, setIsQuerying } = useWebSocket();
-  console.log(isQuerying);
+  const { socket, user, isQuerying, setIsQuerying, setFetched } =
+    useWebSocket();
+  // console.log(isQuerying);
   const dispatch = useDispatch();
   const { uuid } = useParams();
-  const conversation = useSelector((state) => state.conversations);
-  const messages =
-    conversation.currentConversation === uuid ? conversation.messages : [];
+  const conversation = useSelector((state) =>
+    state.conversations.conversations.find((c) => c.id === uuid),
+  );
+  const messages = conversation ? conversation.messages : [];
   const [fetchedConversation, setFetchedConversation] = useState([]);
   const {
     data: fetchedConversationData,
@@ -33,6 +35,7 @@ const RightSideBar = () => {
 
   useEffect(() => {
     if (fetchedConversationData?.length > 0) {
+      setFetched(true);
       dispatch(
         initializeConversation({
           conversation_id: uuid,
@@ -46,6 +49,7 @@ const RightSideBar = () => {
     if (socket) {
       socket.on('response', (data) => {
         const chunk = data.data;
+        setFetched(false);
         dispatch(
           addMessage({
             conversationId: uuid,
