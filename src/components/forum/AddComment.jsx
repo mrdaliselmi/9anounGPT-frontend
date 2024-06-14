@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 import {
   Form,
   FormControl,
@@ -17,6 +18,7 @@ import { Button } from '../ui/button';
 import { usePostCommentMutation } from '@/app/state/forum/forumApiSlice';
 
 export default function AddComment({ postId }) {
+  const navigate = useNavigate();
   const formSchema = z.object({
     comment: z
       .string()
@@ -43,7 +45,9 @@ export default function AddComment({ postId }) {
     const body = { content: values.comment };
     const id = parseInt(postId, 10);
     postComment({ id, body });
-    window.location.reload(false);
+    setTimeout(() => {
+      navigate(`/forum/questions?view=${postId}`);
+    }, 500);
   }
   useEffect(() => {
     if (isSuccess) {

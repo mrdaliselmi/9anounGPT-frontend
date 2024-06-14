@@ -5,6 +5,7 @@ import { baseQuery } from '@/app/query';
 const conversationApiSlice = createApi({
   reducerPath: 'conversationApi',
   baseQuery,
+  tagTypes: ['Conversations'],
   endpoints: (builder) => ({
     fetchConversationHistory: builder.query({
       query: ({ conversationId, userId }) =>
@@ -27,9 +28,11 @@ const conversationApiSlice = createApi({
         },
         body: { conversation_id, user_id },
       }),
+      invalidatesTags: ['Conversations'],
     }),
     fetchUserHistory: builder.query({
       query: ({ userId }) => `/get_user_history?user_id=${userId}`,
+      providesTags: ['Conversations'],
     }),
   }),
 });

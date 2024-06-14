@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { PlusIcon, SparklesIcon } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { ForwardIcon, PlusIcon } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import HistoricChats from '@/components/chat/sideBar/HistoricChats.jsx';
 import { useWebSocket } from '@/context/webSocketContext.jsx';
 import { ScrollArea } from '@/components/ui/scroll-area.jsx';
 import logo from '/assets/logo.png';
 import { useFetchUserHistoryQuery } from '@/app/state/conversation/conversationApiSlice.js';
 import { ConversationSkeleton } from '@/components/chat/skeleton/ConversationSkeleton.jsx';
+import { setUserHistory } from '@/app/state/conversation/conversationSlice.js';
 
 function SideBar() {
   const navigate = useNavigate();
-  const [conversations, setConversations] = useState([]);
+  const dispatch = useDispatch();
   const { user } = useWebSocket();
+
   const newChat = () => {
     navigate('/chat');
   };
   const upgradeToPlus = () => {
-    // console.log('Upgrade to Plus');
+    navigate('/forum');
   };
+  const conversations = useSelector(
+    (state) => state.conversations.conversations,
+  );
 
   const {
     data: userHistory,
@@ -29,31 +35,26 @@ function SideBar() {
   });
 
   useEffect(() => {
-    if (isLoading) {
-      console.log('Loading user history');
-    }
     if (userHistory) {
-      setConversations(userHistory);
-      console.log('userHistory', userHistory);
+      dispatch(setUserHistory(userHistory));
     }
-    if (userHistoryError) {
-      console.log('Error fetching user history:', userHistoryError);
-    }
-  }, [userHistory, isLoading, userHistoryError]);
+  }, [userHistory, dispatch]);
 
   return (
     <div className="flex lg:w-1/5 md:w-1/3 w-full flex-col justify-between items-center h-full  bg-zinc-200 min-h-screen px-0 py-6">
       <div className="flex flex-col items-center w-full">
-        <h1 className="text-2xl flex flex-row">
-          <img src={logo} alt="logo" className="h-9 w-9 mr-1" />
-          <span className="font-semibold">9anoun</span>GPT
+        <h1>
+          <Link to="/" className="text-2xl flex flex-row">
+            <img src={logo} alt="logo" className="h-9 w-9 mr-1" />
+            <span className="font-semibold">9anoun</span>GPT
+          </Link>
         </h1>
         <button
           className="w-3/4 cursor-pointer flex justify-start items-center mt-8"
           onClick={newChat}
         >
-          <div className="w-full flex items-center gap-3 px-4 py-3 rounded-full text-xs bg-zinc-300 hover:bg-zinc-100">
-            <PlusIcon /> <p className="text-lg">New Chat</p>
+          <div className="w-full flex items-center gap-3 px-8 py-3 rounded-full text-xs bg-white hover:text-zinc-500 hover:ring-1">
+            <PlusIcon /> <p className="text-lg ml-2">New Chat</p>
           </div>
         </button>
 
@@ -78,8 +79,10 @@ function SideBar() {
         className="flex items-center gap-3 cursor-pointer rounded-full bg-white px-4 py-2 w-3/4 hover:bg-zinc-200 hover:ring-1"
         onClick={upgradeToPlus}
       >
-        <SparklesIcon className="w-5 h-5" />
-        <div className="text-xs w-full">Upgrade to Plus</div>
+        <ForwardIcon className="w-5 h-5" />
+        <div className="text-md w-full  font-semibold text-zinc-700 hover:text-zinc-500 ">
+          Go To Forum
+        </div>
       </button>
     </div>
   );

@@ -76,7 +76,7 @@ function ProfileSelection({
           </Slider>
 
           <ButtonBack
-            className="button-back left"
+            className="button-back left !stroke-black"
             onClick={() => {
               onButtonBack();
             }}
@@ -84,7 +84,7 @@ function ProfileSelection({
             <ArrowDownIcon />
           </ButtonBack>
           <ButtonNext
-            className="button-next right"
+            className="button-next right !stroke-black"
             onClick={() => {
               onButtonNext();
             }}
@@ -100,28 +100,28 @@ function ProfileSelection({
       <div className="big-profile">
         <div className="bp-section">
           <div className="flex justify-start text-xl pb-2  ">
-            <h3>Background</h3>
+            <h3 className="font-semibold">Background</h3>
           </div>
           <div className="bps-body">
             <p className="background">{selectedProfile.background}</p>
           </div>
         </div>
         <div className="bp-section">
-          <div className="flex justify-start text-xl pb-2  ">
+          <div className="flex justify-start text-xl pb-2 font-semibold">
             <h3>Spoken language</h3>
           </div>
-          <div className="bps-body">
+          <div className="bps-body !text-left">
             <p>{normaliseArrayToSentence(selectedProfile.language)}</p>
           </div>
         </div>
         <div className="bp-section">
-          <div className="flex justify-start text-xl pb-2  ">
+          <div className="flex justify-start text-xl pb-2 font-semibold">
             <h3>Education</h3>
           </div>
           <div className="bps-body">
             {selectedProfile.education.map(({ school, degree, year }) => (
               <div key={school + degree + year} className="education-item">
-                <div className="ei-info">
+                <div className="ei-info !text-left">
                   <h4>{school}</h4>
                   <p>{degree}</p>
                 </div>
@@ -135,9 +135,9 @@ function ProfileSelection({
 
         <div className="bp-section">
           <div className="flex justify-start text-xl pb-2  ">
-            <h3>Contact</h3>
+            <h3 className="font-semibold">Contact</h3>
           </div>
-          <div className="bps-body">
+          <div className="bps-body !text-left">
             <a
               href={`tel:${sanitisePhoneNumber(selectedProfile.contactNumber)}`}
             >
@@ -148,16 +148,16 @@ function ProfileSelection({
 
         <div className="bp-section">
           <div className="flex justify-start text-xl pb-2  ">
-            <h3>Available Hours</h3>
+            <h3 className="font-semibold">Available Hours</h3>
           </div>
-          <div className="bps-body">
+          <div className="bps-body !text-left">
             <table>
               {selectedProfile.schedule.map(({ day, startTime, endTime }) => (
                 <tr key={day + startTime}>
                   <td>
                     <p>{day}</p>
                   </td>
-                  <td>
+                  <td className="!text-left">
                     <p>
                       {`
                           ${startTime} - 
@@ -173,9 +173,9 @@ function ProfileSelection({
 
         <div className="bp-section">
           <div className="flex justify-start text-xl pb-2  ">
-            <h3>Prices</h3>
+            <h3 className="font-semibold">Prices</h3>
           </div>
-          <div className="bps-body">
+          <div className="bps-body !text-left">
             <table>
               <tr>
                 <td>

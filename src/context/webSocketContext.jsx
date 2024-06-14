@@ -9,7 +9,7 @@ export const WebSocketProvider = ({ children }) => {
   const { user } = useUser();
   const [isQuerying, setIsQuerying] = useState(false);
   const backendUrl = import.meta.env.VITE_BACK_API_URL;
-
+  const [fetched, setFetched] = useState(false);
   useEffect(() => {
     const socketInstance = io(backendUrl);
     setSocket(socketInstance);
@@ -29,7 +29,14 @@ export const WebSocketProvider = ({ children }) => {
 
   return (
     <WebSocketContext.Provider
-      value={{ socket, user, isQuerying, setIsQuerying }}
+      value={{
+        socket,
+        user,
+        isQuerying,
+        setIsQuerying,
+        fetched,
+        setFetched,
+      }}
     >
       {children}
     </WebSocketContext.Provider>

@@ -132,7 +132,7 @@ export default function AskQuestion() {
                   <FormControl>
                     <Input
                       className="shadow-none border-gray-600"
-                      placeholder="eg. Am I eligible to have a driver's license in Tunisia?"
+                      placeholder="DroitPenal, Tunisie, PermisDeConduire, etc."
                       {...field}
                     />
                   </FormControl>

@@ -22,10 +22,10 @@ function Container({ updateAppointment }) {
   };
 
   return (
-    <div className="container p-0">
-      <div className="container-header ">
-        <h3 className="ch-title">Book your appointment online</h3>
-        <h4 className="ch-subtitle">Fill in the following information</h4>
+    <div className="container p-0 !max-w-[450px]">
+      <div className=" rounded-t-lg py-4 bg-gray-300 ">
+        <h3 className="text-lg font-semibold">Book your appointment online</h3>
+        <h4 className="text-sm">Fill in the following information</h4>
       </div>
       <div className="container-body">
         <Item

@@ -24,7 +24,7 @@ export default function Main() {
     <section className="text-gray-600 body-font">
       <div className="px-64 flex pt-72 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 pt-6 flex flex-col md:items-start md:text-left mb-40 items-center text-center">
-          <h1 className="mb-5 items-center text-gray-900 text-wrap w-">
+          <h1 className="mb-5 items-center text-gray-900 text-wrap">
             <TypewriterEffectSmooth words={heroWords} />
           </h1>
           <p className="mb-4 xl:w-3/4 text-gray-600 text-lg">
@@ -48,7 +48,7 @@ export default function Main() {
           </div>
         </div>
         <div className="xl:mr-44 sm:mr-0 sm:mb-28 mb-0 mr-48 md:pl-10">
-          <img className="w-80 ml-24 opacity-50" alt="logo" src={logo} />
+          <img className="w-80 ml-32 mt-5 opacity-50" alt="logo" src={logo} />
         </div>
       </div>
       <TypewriterEffect />

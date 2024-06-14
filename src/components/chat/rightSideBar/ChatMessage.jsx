@@ -71,9 +71,9 @@ export const ChatMessage = ({ message, userAvatar }) => {
         <div className="bg-gray-100 rounded-lg p-2 mt-1 w-full">
           <div
             ref={messageRef}
-            className="whitespace-pre-wrap break-words text-left"
+            className="whitespace-pre-wrap break-words text-left leading-tight"
           >
-            <Typewriter markdownText={message.message} />
+            <Typewriter isUser={!isBot} markdownText={message.message} />
           </div>
         </div>
         <span className="text-xs text-gray-500 ">

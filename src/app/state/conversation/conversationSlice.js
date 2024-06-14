@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unsafe-optional-chaining */
 import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,43 +7,77 @@ const conversationsSlice = createSlice({
   name: 'conversations',
   initialState: {
     currentConversation: null,
-    messages: [],
+    conversations: [],
   },
   reducers: {
     startConversation: (state, action) => {
+      const newConversation = {
+        id: action.payload.conversation_id,
+        messages: [
+          {
+            id: uuidv4(),
+            role: 'user',
+            message: action.payload.question,
+          },
+        ],
+      };
       state.currentConversation = action.payload.conversation_id;
-      // console.log('startConversation', action.payload);
-      state.messages = [
-        {
-          id: uuidv4(),
-          role: 'user',
-          message: action.payload.question,
-        },
-      ];
+      state.conversations.push(newConversation);
     },
     initializeConversation: (state, action) => {
-      state.currentConversation = action.payload.conversation_id;
-      // console.log('initializeConversation', action.payload.messages);
-      state.messages = action.payload.messages;
-    },
-    addMessage: (state, action) => {
-      const { role, message, id } = action.payload;
-      // console.log('addMessage', action.payload);
-      const lastMessage = state.messages[state.messages?.length - 1];
-      if (lastMessage && lastMessage.role === role) {
-        lastMessage.message += message;
+      const { conversation_id, messages } = action.payload;
+      const conversation = state.conversations.find(
+        (c) => c.id === conversation_id,
+      );
+      if (conversation) {
+        conversation.messages = messages;
       } else {
-        state.messages.push({
-          id: id || uuidv4(),
-          role,
-          message,
+        state.conversations.push({
+          id: conversation_id,
+          messages,
         });
       }
+    },
+    setCurrentConversation: (state, action) => {
+      state.currentConversationId = action.payload;
+    },
+    addMessage: (state, action) => {
+      const { conversationId, role, message } = action.payload;
+      const conversation = state.conversations.find(
+        (c) => c.id === conversationId,
+      );
+      if (conversation) {
+        const lastMessage =
+          conversation.messages[conversation.messages?.length - 1];
+        if (lastMessage && lastMessage.role === role) {
+          lastMessage.message += message;
+        } else {
+          conversation.messages.push({
+            id: uuidv4(),
+            role,
+            message,
+          });
+        }
+      }
+    },
+    setUserHistory: (state, action) => {
+      state.conversations = action.payload;
+    },
+    deleteConversationFromHistory: (state, action) => {
+      state.conversations = state.conversations.filter(
+        (c) => c.id !== action.payload.conversationId,
+      );
     },
   },
 });
 
-export const { startConversation, addMessage, initializeConversation } =
-  conversationsSlice.actions;
+export const {
+  startConversation,
+  addMessage,
+  initializeConversation,
+  setCurrentConversation,
+  setUserHistory,
+  deleteConversationFromHistory,
+} = conversationsSlice.actions;
 
 export default conversationsSlice.reducer;

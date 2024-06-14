@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/booking-submission.scss';
 import listOfAppointments from '@/components/book-appointment/data/listOfAppointments.js';
+import { Button } from '@/components/ui/button';
 
 function BookingSubmission({
   selectedProfile,
@@ -138,12 +139,15 @@ function BookingSubmission({
 
         {selectedTime ? response : ''}
 
-        <input
+        <Button
+          className="!w-full"
           type="submit"
           value="Submit Booking"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit}
           disabled={!selectedTime}
-        />
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );
