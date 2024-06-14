@@ -1,16 +1,23 @@
 import React from 'react';
-import { useChatQuery } from '@/app/state/user/userApiSlice.js';
+import { Outlet } from 'react-router-dom';
+import SideBar from '@/components/chat/sideBar/SideBar.jsx';
+import { WebSocketProvider } from '@/context/webSocketContext.jsx';
+import NavChat from '@/components/chat/navbar/NavChat.jsx';
 
 function Chat() {
-  const { data, error, isLoading } = useChatQuery();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
+  document.title = 'Chat - 9anounGPT';
   return (
-    <div>
-      <h1>{data.data}</h1>
-    </div>
+    <WebSocketProvider>
+      <div className="flex h-screen ">
+        <SideBar />
+        <div className="w-full flex flex-col h-screen">
+          <NavChat />
+          <div className="mt-16">
+            <Outlet />
+          </div>
+        </div>
+      </div>
+    </WebSocketProvider>
   );
 }
 

@@ -4,6 +4,7 @@ import LeftSideBar from '@/components/forum/LeftSideBar';
 import RightSideBar from '@/components/forum/RightSideBar';
 
 function Forum() {
+  document.title = 'Forum - 9anounGPT';
   return (
     <div className="mt-[68px]">
       <Navbar className="overflow-hidden fixed top-0 left-0 z-10" />
@@ -14,7 +15,7 @@ function Forum() {
         <div className="w-full">
           <Outlet />
         </div>
-        <div className="mx-2 mt-3 w-[400px]">
+        <div className="mx-2 mt-3 w-[400px] pr-6">
           <RightSideBar />
         </div>
       </div>

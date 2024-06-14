@@ -13,11 +13,11 @@ if (!PUBLISHABLE_KEY) {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </ClerkProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ClerkProvider>,
+  // </React.StrictMode>,
 );

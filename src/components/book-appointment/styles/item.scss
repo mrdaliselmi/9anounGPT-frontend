@@ -1,0 +1,39 @@
+@import "global";
+
+.item {
+  padding: 15px 30px;
+  border-bottom: 1px solid $border-color;
+
+  .item-header {
+    .item-id {
+      @include border-radius(50%);
+      color: #000;
+      --tw-bg-opacity: 1;
+      background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+      width: 28px;
+      height: 28px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: absolute;
+      left: -15px;
+
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 28px;
+    }
+
+    .item-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin: 2px 0 8px;
+      padding: 2px 0;
+      color: $body-title-color;
+    }
+  }
+
+  .item-body {
+  }
+}
